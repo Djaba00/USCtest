@@ -60,6 +60,8 @@ namespace USCtext.DAL.Repositories
                 tax.HotWatherThermalEnergyCost = entity.HotWatherThermalEnergyCost;
 
                 tax.ElectricPowerVolume = entity.ElectricPowerVolume;
+                tax.ElectricityDayVolume = entity.ElectricityDayVolume;
+                tax.ElectricityNightVolume = entity.ElectricityNightVolume;
                 tax.ElectricPowerCost = entity.ElectricPowerCost;
 
                 db.Taxes.Update(tax);

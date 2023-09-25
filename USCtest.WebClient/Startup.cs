@@ -30,6 +30,9 @@ namespace USCtest.WebClient
         {
             string connctionStrinng = Configuration.GetConnectionString("DefaultConnection");
 
+            // добавить profile AM
+            services.AddBllServices();
+
             services.AddSqLiteContext(connctionStrinng, "USCtest.WebClient");
 
 
