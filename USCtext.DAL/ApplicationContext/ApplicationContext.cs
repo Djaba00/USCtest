@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using USCtext.DAL.ApplicationContext.ModelConfigurations;
+using USCtext.DAL.DataContext.ModelConfigurations;
 using USCtext.DAL.Entities;
 
-namespace USCtext.DAL.ApplicationContext
+namespace USCtext.DAL.DataContext
 {
     public class ApplicationContext : IdentityDbContext<User>
     {
-        DbSet<Flat> Flats { get; set; }
-        DbSet<Tax> Taxes { get; set; }
+        public DbSet<Flat> Flats { get; set; }
+        public DbSet<Tax> Taxes { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {

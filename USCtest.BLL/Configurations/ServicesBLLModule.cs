@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using USCtext.DAL.ApplicationContext;
+using USCtext.DAL.DataContext;
 using USCtext.DAL.Entities;
 
 namespace USCtest.BLL.Configurations

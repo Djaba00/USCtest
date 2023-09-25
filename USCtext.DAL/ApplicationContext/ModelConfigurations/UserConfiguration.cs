@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using USCtext.DAL.Entities;
 
-namespace USCtext.DAL.ApplicationContext.ModelConfigurations
+namespace USCtext.DAL.DataContext.ModelConfigurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

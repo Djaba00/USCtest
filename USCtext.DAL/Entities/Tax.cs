@@ -12,8 +12,10 @@ namespace USCtext.DAL.Entities
 
         public double ColdWatherVolume { get; set; }
         public decimal ColdWather { get; set; }
+
         public double HotWatherVolume { get; set; }
         public decimal HotWather { get; set; }
+
         public double ElectricPowerVolume { get; set; }
         public decimal ElectricPower { get; set; }
 
