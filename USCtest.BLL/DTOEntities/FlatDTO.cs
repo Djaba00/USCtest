@@ -22,8 +22,8 @@ namespace USCtest.BLL.DTOEntities
 
         public int Residents { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<UserDTO> Users { get; set; }
 
-        public virtual ICollection<Tax> Taxes { get; set; }
+        public virtual ICollection<TaxDTO> Taxes { get; set; }
     }
 }

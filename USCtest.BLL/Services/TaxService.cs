@@ -1,51 +1,88 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using USCtest.BLL.BusinesModels.Helpers;
 using USCtest.BLL.DTOEntities;
 using USCtest.BLL.Interfaces;
 using USCtext.DAL.Entities;
+using USCtext.DAL.Interfaces;
 
 namespace USCtest.BLL.Services
 {
     public class TaxService : ITaxService
     {
+        IUnitOfWork db;
         IMapper mapper;
 
-        public TaxService(IMapper mapper)
+        public TaxService(IUnitOfWork db, IMapper mapper, Microsoft.AspNetCore.Identity.UserManager<User> userManager)
         {
+            this.db = db;
             this.mapper = mapper;
         }
 
         public async Task Calculate(UserDTO user)
         {
-            if (!(user is null))
-            {
-                CommonCalculate(user);
-            }
+            CommonCalculate(user);
+
+            await db.Users.UpdateAsync(mapper.Map<User>(user));
         }
 
-        private async Task CommonCalculate(UserDTO user)
+        private void CommonCalculate(UserDTO user)
         {
-            var coldWater = 0;
-            var coldWaterVolume = 0;
+            var coldWaterVolume = CalculateVolume(user, Indications.ColdWater);
+            var coldWaterCost = CalculateCost(user, Indications.ColdWater, coldWaterVolume);
 
-            var elecricity = 0;
+            var hotWaterHeatVolume = CalculateVolume(user, Indications.HotWaterHeat);
+            var hotWaterHeatCost = CalculateCost(user, Indications.HotWaterHeat, hotWaterHeatVolume);
 
-            var newTax = new TaxDTO()
+            var hotWaterHotWaterThermalEnergytVolume = CalculateVolume(user, Indications.HotWatherThermalEnergy);
+            var hotWaterHotWaterThermalEnergytCost = CalculateCost(user, Indications.HotWatherThermalEnergy, hotWaterHotWaterThermalEnergytVolume);
+
+            double electricityDayVolume = 0;
+            decimal electricityDayCost = 0;
+
+            double electricityNightVolume = 0;
+            decimal electricityNightCost = 0;
+            double electricyVolume = 0;
+            decimal electricyCost = 0;
+
+            if (user.Flat.IsElectricPowerDevice)
+            {
+                electricityDayVolume = CalculateVolume(user, Indications.ElectricityDay);
+                electricityDayCost = CalculateCost(user, Indications.ElectricityDay);
+
+                electricityNightVolume = CalculateVolume(user, Indications.ElectricityNight);
+                electricityNightCost = CalculateCost(user, Indications.ElectricityNight);
+            }
+            else
+            {
+                electricyVolume = CalculateVolume(user, Indications.Electricity);
+                electricyCost = CalculateCost(user, Indications.Electricity, electricyVolume);
+            }
+
+
+            var newTaxDto = new TaxDTO()
             {
                 Date = DateTime.Now,
-                ColdWatherCost = coldWater,
                 ColdWaterVolume = coldWaterVolume,
-                ElectricPowerCost = elecricity,
+                ColdWatherCost = coldWaterCost,
+                HotWatherHeatVolume = hotWaterHeatVolume,
+                HotWatherHeatCost = hotWaterHeatCost,
+                HotWatherThermalEnergytVolume = hotWaterHotWaterThermalEnergytVolume,
+                HotWatherThermalEnergyCost = hotWaterHotWaterThermalEnergytCost,
+                ElectricPowerVolume = electricyVolume,
+                ElectricPowerCost = electricyCost,
+                ElectricityDayVolume = electricityDayVolume,
+                ElectricityDayCost = electricityDayCost,
+                ElectricityNightVolume = electricityNightVolume,
+                ElectricityNightCost = electricityNightCost,
             };
 
-            
-
-            user.Flat.Taxes.Add(mapper.Map<Tax>(newTax));
+            user.Flat.Taxes.Add(newTaxDto);
         }
 
         private double CalculateVolume(UserDTO user, Indications indications)
@@ -56,12 +93,12 @@ namespace USCtest.BLL.Services
 
             switch (indications)
             {
-                case Indications.ColdWather:
+                case Indications.ColdWater:
                     var currentColdWatherVolume = user.Indications.ColdWather;
 
                     if (user.Flat.IsColdWatherDevice)
                     {
-                        var lastVolume = lastTax.ColdWatherVolume;
+                        var lastVolume = lastTax.ColdWaterVolume;
 
                         var currentVolume = lastVolume == default ? currentColdWatherVolume : currentColdWatherVolume - lastVolume;
 
@@ -76,7 +113,7 @@ namespace USCtest.BLL.Services
 
                     break;
 
-                case Indications.HotWatherHeat:
+                case Indications.HotWaterHeat:
 
                     var watherHeatVolume = user.Indications.HotWatherHeat;
 
@@ -104,7 +141,7 @@ namespace USCtest.BLL.Services
 
                     if (user.Flat.IsHotWatherDevice)
                     {
-                        var lastVolume = lastTax.HotWatherThermalEnergyVolume;
+                        var lastVolume = lastTax.HotWatherThermalEnergytVolume;
 
                         var currentVolume = lastVolume == default ? thermalEnergyVolume : thermalEnergyVolume - lastVolume;
 
@@ -133,7 +170,7 @@ namespace USCtest.BLL.Services
 
                     var electricityDayVolume = user.Indications.ElectricityDay - lastTax.ElectricityDayVolume;
 
-                    return electricityDayVolume.Value;
+                    return electricityDayVolume;
 
                     break;
 
@@ -141,7 +178,7 @@ namespace USCtest.BLL.Services
 
                     var electricityNightVolume = user.Indications.ElectricityNight - lastTax.ElectricityNightVolume;
 
-                    return electricityNightVolume.Value;
+                    return electricityNightVolume;
 
                     break;
 
@@ -155,11 +192,11 @@ namespace USCtest.BLL.Services
         {
             switch (indications)
             {
-                case Indications.ColdWather:
+                case Indications.ColdWater:
                     return Convert.ToDecimal(volume * Fees.ColdWather);
                     break;
 
-                case Indications.HotWatherHeat:
+                case Indications.HotWaterHeat:
                     return Convert.ToDecimal(volume * Fees.HotWatherHeat);
                     break;
 

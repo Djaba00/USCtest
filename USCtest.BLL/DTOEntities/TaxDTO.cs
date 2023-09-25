@@ -23,10 +23,14 @@ namespace USCtest.BLL.DTOEntities
         public double HotWatherThermalEnergytVolume { get; set; }
         public decimal HotWatherThermalEnergyCost { get; set; }
 
-        public double? ElectricPowerVolume { get; set; }
-        public double? ElectricityDayVolume { get; set; }
-        public double? ElectricityNightVolume { get; set; }
+        public double ElectricPowerVolume { get; set; }
         public decimal ElectricPowerCost { get; set; }
+
+        public double ElectricityDayVolume { get; set; }
+        public decimal ElectricityDayCost { get; set; }
+
+        public double ElectricityNightVolume { get; set; }
+        public decimal ElectricityNightCost { get; set; }
 
         public string FlatId { get; set; }
         public Flat Flat { get; set; }

@@ -8,8 +8,8 @@ namespace USCtest.BLL.BusinesModels.Helpers
 {
     public enum Indications
     {
-        ColdWather, // ХВС
-        HotWatherHeat, // ГВС Теплоноситель
+        ColdWater, // ХВС
+        HotWaterHeat, // ГВС Теплоноситель
         HotWatherThermalEnergy, // ГВС Тепловая энергия
         Electricity, // ЭЭ
         ElectricityDay, // ЭЭ день
