@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "USCtest.BLL", "USCtest.BLL\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "USCtest.WebClient", "USCtest.WebClient\USCtest.WebClient.csproj", "{7EA59B83-AF80-460F-A6FD-CDD0CCF1179E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USCtest.BLLTests", "USCtest.BLLTests\USCtest.BLLTests.csproj", "{1E268D94-8E5C-478E-B92A-FBC566A175E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7EA59B83-AF80-460F-A6FD-CDD0CCF1179E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EA59B83-AF80-460F-A6FD-CDD0CCF1179E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EA59B83-AF80-460F-A6FD-CDD0CCF1179E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E268D94-8E5C-478E-B92A-FBC566A175E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E268D94-8E5C-478E-B92A-FBC566A175E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E268D94-8E5C-478E-B92A-FBC566A175E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E268D94-8E5C-478E-B92A-FBC566A175E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
