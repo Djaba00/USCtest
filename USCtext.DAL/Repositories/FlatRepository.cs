@@ -19,12 +19,12 @@ namespace USCtext.DAL.Repositories
 
         public async Task<IEnumerable<Flat>> GetAllAsync()
         {
-            return await db.Flats.ToListAsync();
+            return await db.Flats.Include(f => f.Users).Include(f => f.Taxes).ToListAsync();
         }
 
         public async Task<Flat?> GetAsync(int id)
         {
-            var result = await db.Flats.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+            var result = await db.Flats.Include(f => f.Users).Include(f => f.Taxes).AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
             return result;
         }

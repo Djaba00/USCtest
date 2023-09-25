@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using USCtext.DAL.DataContext;
 using USCtext.DAL.Entities;
@@ -20,7 +17,14 @@ namespace USCtext.DAL.Repositories
 
         private bool disposed = false;
 
-        ContextUnitOfWork(ApplicationContext context, UserManager<User> userManager)
+        public ContextUnitOfWork(UserManager<User> userManager)
+        {
+            db = new ApplicationContext();
+
+            UserManager = userManager;
+        }
+
+        public ContextUnitOfWork(ApplicationContext context, UserManager<User> userManager)
         {
             db = context;
 
@@ -58,6 +62,7 @@ namespace USCtext.DAL.Repositories
                 return UserManager;
             }
         }
+
 
         public void Dispose()
         {

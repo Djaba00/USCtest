@@ -10,6 +10,8 @@ namespace USCtext.DAL.DataContext
         public DbSet<Flat> Flats { get; set; }
         public DbSet<Tax> Taxes { get; set; }
 
+        public ApplicationContext() { }
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }

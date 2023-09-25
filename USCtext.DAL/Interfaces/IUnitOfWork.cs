@@ -11,8 +11,8 @@ namespace USCtext.DAL.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IEntityRepository<Flat> Flats { get; }
-        IEntityRepository<Tax> Taxs { get; }
-        UserManager<User> UserManager { get; }
+        IEntityRepository<Tax> Taxes { get; }
+        UserManager<User> Users { get; }
 
         Task SaveAsync();
     }
