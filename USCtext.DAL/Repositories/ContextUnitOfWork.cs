@@ -17,13 +17,6 @@ namespace USCtext.DAL.Repositories
 
         private bool disposed = false;
 
-        public ContextUnitOfWork(UserManager<User> userManager)
-        {
-            db = new ApplicationContext();
-
-            UserManager = userManager;
-        }
-
         public ContextUnitOfWork(ApplicationContext context, UserManager<User> userManager)
         {
             db = context;
