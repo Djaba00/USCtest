@@ -47,16 +47,20 @@ namespace USCtext.DAL.Repositories
             {
                 tax.Flat = entity.Flat;
 
+                tax.Date = entity.Date;
                 tax.IsPayed = entity.IsPayed;
 
                 tax.ColdWatherVolume = entity.ColdWatherVolume;
-                tax.ColdWather = entity.ColdWather;
+                tax.ColdWatherCost = entity.ColdWatherCost;
 
-                tax.HotWatherVolume = entity.HotWatherVolume;
-                tax.HotWather = entity.HotWather;
+                tax.HotWatherHeatVolume = entity.HotWatherHeatVolume;
+                tax.HotWatherHeatCost = entity.HotWatherHeatCost;
+
+                tax.HotWatherThermalEnergyVolume = entity.HotWatherThermalEnergyVolume;
+                tax.HotWatherThermalEnergyCost = entity.HotWatherThermalEnergyCost;
 
                 tax.ElectricPowerVolume = entity.ElectricPowerVolume;
-                tax.ElectricPower = entity.ElectricPower;
+                tax.ElectricPowerCost = entity.ElectricPowerCost;
 
                 db.Taxes.Update(tax);
 

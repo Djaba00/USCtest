@@ -16,6 +16,6 @@ namespace USCtext.DAL.Entities
         public int PassportNumber { get; set; }
 
         public string FlatId { get; set; }
-        public Flat Flat {  get; set; }
+        public Flat Flat { get; set; } 
     }
 }
