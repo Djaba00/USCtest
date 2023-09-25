@@ -1,24 +1,46 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using USCtext.DAL.DataContext;
 using USCtext.DAL.Entities;
+using USCtext.DAL.Interfaces;
+using USCtext.DAL.Repositories;
 
 namespace USCtest.BLL.Configurations
 {
     public static class ServicesBLLModule
     {
-        public static IServiceCollection AddBllServices(this IServiceCollection services)
+        /// <summary>
+        /// Automapper + repositories
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="mappingProfile" - профиль automapper со столя клиента (DTO <-> VM)></param>
+        /// <returns></returns>
+        public static IServiceCollection AddBllServices(this IServiceCollection services, Profile mappingProfile = null)
         {
+            var mapperConfig = new MapperConfiguration((v) =>
+            {
+                v.AddProfile(mappingProfile);
+                v.AddProfile(new MappingProfileBLL());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+
+            services.AddSingleton(mapper);
+
+
+            services.AddScoped<IUnitOfWork, ContextUnitOfWork>();
+
             return services;
         }
 
         /// <summary>
-        /// Внедрение зависимости для базы SqLite, clientProjectName передается для миграций
+        /// Внедрение зависимости для базы SqLite
         /// </summary>
         /// <param name="services"></param>
         /// <param name="connectionString"></param>
-        /// <param name="clientProjectName"></param>
+        /// <param name="clientProjectName" - для миграций></param>
         /// <returns></returns>
         public static IServiceCollection AddSqLiteContext(this IServiceCollection services, string connectionString, string clientProjectName)
         {
