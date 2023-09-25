@@ -10,6 +10,7 @@ using USCtest.BLL.DTOEntities;
 using USCtest.BLL.Interfaces;
 using USCtext.DAL.Entities;
 using USCtext.DAL.Interfaces;
+using USCtext.DAL.Repositories;
 
 namespace USCtest.BLL.Services
 {
@@ -18,7 +19,7 @@ namespace USCtest.BLL.Services
         IUnitOfWork db;
         IMapper mapper;
 
-        public TaxService(IUnitOfWork db, IMapper mapper, Microsoft.AspNetCore.Identity.UserManager<User> userManager)
+        public TaxService(IUnitOfWork db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
@@ -29,6 +30,11 @@ namespace USCtest.BLL.Services
             CommonCalculate(user);
 
             await db.Users.UpdateAsync(mapper.Map<User>(user));
+        }
+
+        public void CalculateForTest(UserDTO user)
+        {
+            CommonCalculate(user);
         }
 
         private void CommonCalculate(UserDTO user)
@@ -72,7 +78,7 @@ namespace USCtest.BLL.Services
                 ColdWatherCost = coldWaterCost,
                 HotWatherHeatVolume = hotWaterHeatVolume,
                 HotWatherHeatCost = hotWaterHeatCost,
-                HotWatherThermalEnergytVolume = hotWaterHotWaterThermalEnergytVolume,
+                HotWatherThermalEnergyVolume = hotWaterHotWaterThermalEnergytVolume,
                 HotWatherThermalEnergyCost = hotWaterHotWaterThermalEnergytCost,
                 ElectricPowerVolume = electricyVolume,
                 ElectricPowerCost = electricyCost,
@@ -85,10 +91,16 @@ namespace USCtest.BLL.Services
             user.Flat.Taxes.Add(newTaxDto);
         }
 
-        private double CalculateVolume(UserDTO user, Indications indications)
+        protected double CalculateVolume(UserDTO user, Indications indications)
         {
-            var lastTaxDate = user.Flat.Taxes.Max(x => x.Date);
-            var lastTax = user.Flat.Taxes.FirstOrDefault(f => f.Date == lastTaxDate);
+            TaxDTO lastTax = new TaxDTO(); 
+
+            if (user.Flat.Taxes.Count != 0)
+            {
+                var lastTaxDate = user.Flat.Taxes.Max(x => x.Date);
+                lastTax = user.Flat.Taxes.FirstOrDefault(f => f.Date == lastTaxDate);
+            }
+           
             var peopleCount = user.Flat.Users.Count;
 
             switch (indications)
@@ -115,7 +127,7 @@ namespace USCtest.BLL.Services
 
                 case Indications.HotWaterHeat:
 
-                    var watherHeatVolume = user.Indications.HotWatherHeat;
+                    var watherHeatVolume = user.Indications.HotWaterHeat;
 
                     if (user.Flat.IsHotWatherDevice)
                     {
@@ -136,12 +148,12 @@ namespace USCtest.BLL.Services
 
                 case Indications.HotWatherThermalEnergy:
 
-                    var watherHeat = user.Indications.HotWatherHeat;
-                    var thermalEnergyVolume = watherHeat * Normatives.HotWatherHeat;
+                    var watherHeat = user.Indications.HotWaterHeat;
+                    var thermalEnergyVolume = watherHeat * Normatives.HotWatherThermalEnergy;
 
                     if (user.Flat.IsHotWatherDevice)
                     {
-                        var lastVolume = lastTax.HotWatherThermalEnergytVolume;
+                        var lastVolume = lastTax.HotWatherThermalEnergyVolume;
 
                         var currentVolume = lastVolume == default ? thermalEnergyVolume : thermalEnergyVolume - lastVolume;
 

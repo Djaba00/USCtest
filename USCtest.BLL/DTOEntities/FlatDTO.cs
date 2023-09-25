@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace USCtest.BLL.DTOEntities
         public bool IsHotWatherDevice { get; set; }
         public bool IsElectricPowerDevice { get; set; }
 
-        public int Residents { get; set; }
+        //public int Residents { get; set; }
 
         public virtual ICollection<UserDTO> Users { get; set; }
 

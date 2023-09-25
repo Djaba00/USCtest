@@ -17,11 +17,10 @@ namespace USCtest.BLL.Configurations
         /// <param name="services"></param>
         /// <param name="mappingProfile" - профиль automapper со столя клиента (DTO <-> VM)></param>
         /// <returns></returns>
-        public static IServiceCollection AddBllServices(this IServiceCollection services, Profile mappingProfile = null)
+        public static IServiceCollection AddBllServices(this IServiceCollection services)
         {
             var mapperConfig = new MapperConfiguration((v) =>
             {
-                v.AddProfile(mappingProfile);
                 v.AddProfile(new MappingProfileBLL());
             });
 

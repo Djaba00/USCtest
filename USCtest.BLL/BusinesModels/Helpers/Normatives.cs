@@ -9,8 +9,8 @@ namespace USCtest.BLL.BusinesModels.Helpers
     public static class Normatives
     {
         public static readonly double ColdWather = 4.85;
-        public static readonly double HotWatherHeat = 164;
-        public static readonly double HotWatherThermalEnergy = 4.01;
-        public static readonly double Electricity = 0.05349;
+        public static readonly double Electricity = 164;
+        public static readonly double HotWatherHeat = 4.01;
+        public static readonly double HotWatherThermalEnergy = 0.05349;
     }
 }

@@ -13,8 +13,8 @@ namespace USCtest.BLL.DTOEntities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
-        public int PassportSeries { get; set; }
-        public int PassportNumber { get; set; }
+        public string PassportSeries { get; set; }
+        public string PassportNumber { get; set; }
 
         public string FlatId { get; set; }
         public FlatDTO Flat { get; set; }

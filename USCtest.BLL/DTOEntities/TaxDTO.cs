@@ -20,7 +20,7 @@ namespace USCtest.BLL.DTOEntities
         public double HotWatherHeatVolume { get; set; }
         public decimal HotWatherHeatCost { get; set; }
 
-        public double HotWatherThermalEnergytVolume { get; set; }
+        public double HotWatherThermalEnergyVolume { get; set; }
         public decimal HotWatherThermalEnergyCost { get; set; }
 
         public double ElectricPowerVolume { get; set; }
