@@ -17,5 +17,10 @@ namespace USCtext.DAL.Entities
 
         public string FlatId { get; set; }
         public Flat Flat { get; set; } 
+
+        public string GetFullName()
+        {
+            return $"{LastName} {FirstName} {MiddleName}";
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace USCtext.DAL.Repositories
             }
         }
 
-        public UserManager<User> Users
+        public UserManager<User> UserManager
         {
             get
             {
