@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using USCtest.BLL.BusinesModels;
-using USCtest.BLL.DTOEntities;
+using USCtest.BLL.Models;
 
 namespace USCtest.BLL.Services.Tests
 {
@@ -16,7 +16,7 @@ namespace USCtest.BLL.Services.Tests
         [TestMethod()]
         public void CalculateTest()
         {
-            var flat = new FlatDTO()
+            var flat = new FlatModel()
             {
                 Street = "Pushkina",
                 StreetNumber = 10,
@@ -24,11 +24,11 @@ namespace USCtest.BLL.Services.Tests
                 IsColdWatherDevice = true,
                 IsElectricPowerDevice = true,
                 IsHotWatherDevice = true,
-                Users = new List<UserDTO>(),
-                Taxes = new List<TaxDTO>()
+                Users = new List<UserModel>(),
+                Taxes = new List<TaxModel>()
             };
 
-            var indications = new UserIndications()
+            var indications = new FlatIndications()
             {
                 ColdWather = 100,
                 HotWaterHeat = 100,
@@ -37,7 +37,7 @@ namespace USCtest.BLL.Services.Tests
                 ElectricityNight = 100
             };
 
-            var user = new UserDTO()
+            var user = new UserModel()
             {
                 FirstName = "Test",
                 LastName = "Testovich",

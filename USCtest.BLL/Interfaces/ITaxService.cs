@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using USCtest.BLL.DTOEntities;
+using USCtest.BLL.Models;
 
 namespace USCtest.BLL.Interfaces
 {
     public interface ITaxService
     {
-        Task CalculateTax(UserDTO user);
-        Task TaxPayment(UserDTO user, int taxId);
+        Task CreateTax(FlatModel flatModel);
+        Task UpdateTax(int taxId);
+        Task TaxPayment(int taxId);
     }
 }

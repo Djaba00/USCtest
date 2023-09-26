@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using USCtest.BLL.DTOEntities;
+using USCtest.BLL.Models;
 using USCtest.BLL.Interfaces;
 using USCtext.DAL.Entities;
 using USCtext.DAL.Interfaces;
@@ -25,13 +25,13 @@ namespace USCtest.BLL.Services
             this.mapper = mapper;
         }
 
-        public async Task<FlatDTO> GetFlatById(int id)
+        public async Task<FlatModel> GetFlatById(int id)
         {
             var flat = await db.Flats.GetAsync(id);
 
             if (flat != null)
             {
-                return mapper.Map<FlatDTO>(flat);
+                return mapper.Map<FlatModel>(flat);
             }
             else
             {
@@ -39,7 +39,7 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task<List<FlatDTO>> GetFlatsByAddress(string address)
+        public async Task<List<FlatModel>> GetFlatsByAddress(string address)
         {
             var allflats = await db.Flats.GetAllAsync();
 
@@ -47,11 +47,11 @@ namespace USCtest.BLL.Services
 
             if (findedFlats != null)
             {
-                var flatsDto = new List<FlatDTO>();
+                var flatsDto = new List<FlatModel>();
 
                 foreach (var flat in findedFlats)
                 {
-                    flatsDto.Add(mapper.Map<FlatDTO>(flat));
+                    flatsDto.Add(mapper.Map<FlatModel>(flat));
                 }
 
                 return flatsDto;
@@ -62,7 +62,7 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task CreateFlat(FlatDTO flatDTO)
+        public async Task CreateFlat(FlatModel flatDTO)
         {
             if (flatDTO != null)
             {
@@ -76,7 +76,7 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task UpdateFlat(FlatDTO flatDTO)
+        public async Task UpdateFlat(FlatModel flatDTO)
         {
             if (flatDTO != null)
             {

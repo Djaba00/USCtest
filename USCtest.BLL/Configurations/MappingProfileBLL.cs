@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using USCtest.BLL.DTOEntities;
+using USCtest.BLL.Models;
 using USCtext.DAL.Entities;
 
 namespace USCtest.BLL.Configurations
@@ -14,14 +14,11 @@ namespace USCtest.BLL.Configurations
     {
         public MappingProfileBLL()
         {
-            CreateMap<UserDTO, User>();
-            CreateMap<User, UserDTO>();
+            CreateMap<User, UserModel>().ReverseMap();
 
-            CreateMap<FlatDTO, Flat>();
-            CreateMap<Flat, FlatDTO>();
+            CreateMap<FlatModel, Flat>().ReverseMap();
 
-            CreateMap<TaxDTO, Tax>();
-            CreateMap<Tax, TaxDTO>();
+            CreateMap<TaxModel, Tax>().ReverseMap();
         }
     }
 }
