@@ -32,6 +32,8 @@ namespace USCtest.DAL.Entities
         public double ElectricityNightVolume { get; set; }
         public decimal ElectricityNightCost { get; set; }
 
+        public decimal SummaryCost { get; set; }
+
         public string FlatId { get; set; }
         public virtual Flat Flat { get; set; }
     }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using USCtest.DAL.DataContext;
 using USCtest.DAL.Entities;
 using USCtest.DAL.Interfaces;
@@ -17,10 +18,15 @@ namespace USCtest.BLL.Configurations
         /// <param name="services"></param>
         /// <param name="mappingProfile" - профиль automapper со столя клиента (DTO <-> VM)></param>
         /// <returns></returns>
-        public static IServiceCollection AddBllServices(this IServiceCollection services)
+        public static IServiceCollection AddBllServices(this IServiceCollection services, Profile profile = null)
         {
+            
+                
             var mapperConfig = new MapperConfiguration((v) =>
             {
+                if (profile != null)
+                    v.AddProfile(profile);
+
                 v.AddProfile(new MappingProfileBLL());
             });
 

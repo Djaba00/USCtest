@@ -100,6 +100,8 @@ namespace USCtest.BLL.Services
                 electricyCost = CalculateCost(flatModel, Indications.Electricity, electricyVolume);
             }
 
+            var summaryCost = coldWaterCost + hotWaterHeatCost + hotWaterHotWaterThermalEnergytCost +
+                +electricityDayCost + electricityNightCost + electricyCost;
 
             var newTaxModel = new TaxModel()
             {
@@ -116,6 +118,7 @@ namespace USCtest.BLL.Services
                 ElectricityDayCost = electricityDayCost,
                 ElectricityNightVolume = electricityNightVolume,
                 ElectricityNightCost = electricityNightCost,
+                SummaryCost = summaryCost,
             };
 
             return newTaxModel;

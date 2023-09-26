@@ -1,4 +1,5 @@
 ﻿using System;
+using USCtest.DAL.Entities;
 
 namespace USCtest.BLL.Models
 {
@@ -26,5 +27,10 @@ namespace USCtest.BLL.Models
 
         public double ElectricityNightVolume { get; set; }
         public decimal ElectricityNightCost { get; set; }
+
+        public decimal SummaryCost { get; set; }
+
+        public string FlatId { get; set; }
+        public virtual FlatModel Flat { get; set; }
     }
 }
