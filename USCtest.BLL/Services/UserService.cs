@@ -9,7 +9,7 @@ using USCtest.BLL.Interfaces;
 using USCtext.DAL.Entities;
 using USCtext.DAL.Interfaces;
 
-namespace USCtest.BLLTests.Services
+namespace USCtest.BLL.Services
 {
     public class UserService : IUserService
     {
@@ -26,7 +26,7 @@ namespace USCtest.BLLTests.Services
         {
             var user = await db.UsersManager.FindByIdAsync(id);
 
-            if (user != null)
+            if (user == null)
             {
                 return mapper.Map<UserDTO>(user);
             }
@@ -40,7 +40,7 @@ namespace USCtest.BLLTests.Services
         {
             var users = await db.UsersManager.Users.Where(c => c.GetFullName().Contains(name)).ToListAsync();
 
-            if (users != null)
+            if (users == null)
             {
                 var usersDto = new List<UserDTO>();
 
