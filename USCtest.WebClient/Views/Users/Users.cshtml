@@ -1,5 +1,5 @@
-﻿@    using USCtest.WebClient.ViewModels;
-    using USCtest.WebClient.ViewModels.UserVM;
+﻿@using USCtest.WebClient.ViewModels;
+@using USCtest.WebClient.ViewModels.UserVM;
 
 @model List<UserViewModel>;
 
@@ -16,7 +16,7 @@
         <div class="users-container">
             <div class="user-info-container">
                 <p>@user.FullName</p>
-                <p>@user.PassportSeries @user.PassportNumber</p>
+                <p>@user.Passport</p>
                 @foreach(var flat in user.Flats)
                 {
                     <p>@flat</p>

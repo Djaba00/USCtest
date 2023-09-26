@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using USCtest.DAL.DataContext.ModelConfigurations.Generators;
 using USCtest.DAL.DataContext.ModelConfigurations;
 using USCtest.DAL.Entities;
 
@@ -23,6 +24,12 @@ namespace USCtest.DAL.DataContext
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new FlatConfiguration());
             builder.ApplyConfiguration(new TaxConfiguration());
+
+            var regGen = new RegistrationsGenerator();
+
+            var regList = regGen.Generate(20);
+
+            builder.Entity<Registration>().HasData(regList);
         }
     }
 }

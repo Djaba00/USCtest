@@ -15,11 +15,21 @@ namespace USCtest.DAL.Entities
         public string PassportSeries { get; set; }
         public string PassportNumber { get; set; }
 
-        public string FlatId { get; set; }
+        public int FlatId { get; set; }
         public virtual ICollection<Flat> Flats { get; set; }
 
         public virtual ICollection<Registration> Registrations { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public string GetFullName()
+        {
+            return $"{LastName} {FirstName} {MiddleName}";
+        }
+
+        public string GetFullPassport()
+        {
+            return PassportSeries + PassportNumber;
+        }
     }
 }

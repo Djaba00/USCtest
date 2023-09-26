@@ -24,5 +24,13 @@ namespace USCtest.DAL.Entities
         public virtual ICollection<Tax> Taxes { get; set; }
 
         public virtual ICollection<Registration> Registrations { get; set; }
+
+        public string GetFullAddress()
+        {
+            if (Building is null)
+                return $"ул. {Street} д. {StreetNumber} кв. {FlatNumber}";
+            else
+                return $"ул. {Street} д. {StreetNumber} строение {Building} кв. {FlatNumber}";
+        }
     }
 }

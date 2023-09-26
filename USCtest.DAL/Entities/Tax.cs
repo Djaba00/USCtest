@@ -34,7 +34,7 @@ namespace USCtest.DAL.Entities
 
         public decimal SummaryCost { get; set; }
 
-        public string FlatId { get; set; }
+        public int FlatId { get; set; }
         public virtual Flat Flat { get; set; }
     }
 }

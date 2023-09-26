@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using USCtest.DAL.DataContext.ModelConfigurations.Generators;
 using USCtest.DAL.Entities;
 
 namespace USCtest.DAL.DataContext.ModelConfigurations
@@ -25,6 +26,12 @@ namespace USCtest.DAL.DataContext.ModelConfigurations
 
             builder.Property(u => u.PassportSeries).HasColumnType("nchar(4)");
             builder.Property(u => u.PassportNumber).HasColumnType("nchar(6)");
+
+            var usersGenerator = new UsersGenerator();
+
+            var userList = usersGenerator.Generate(20);
+
+            builder.HasData(userList);
         }
     }
 }

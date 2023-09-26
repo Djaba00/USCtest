@@ -7,12 +7,20 @@ using System.Threading.Tasks;
 using USCtest.BLL.Interfaces;
 using USCtest.BLL.Models;
 using USCtest.DAL.Entities;
+using USCtest.DAL.Interfaces;
 
 namespace USCtest.BLL.Services
 {
     public class AccountService : IAccountService
     {
+        IUnitOfWork db;
+        IMapper mapper;
 
+        public AccountService(IUnitOfWork db, IMapper mapper)
+        {
+            this.db = db;
+            this.mapper = mapper;
+        }
 
 
         public async Task ChangePassword(UserModel userDto, string currentPassword, string newPassword)
