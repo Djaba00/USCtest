@@ -25,11 +25,29 @@ namespace USCtest.BLL.Services
             this.mapper = mapper;
         }
 
-        public async Task Calculate(UserDTO user)
+        public async Task TaxPayment(UserDTO user, int taxId)
+        {
+            var currentTax = await db.Taxes.GetAsync(taxId);
+
+            if (currentTax != null)
+            {
+                currentTax.IsPayed = true;
+
+                await db.Taxes.UpdateAsync(currentTax);
+            }
+        }
+
+
+
+        public async Task CalculateTax(UserDTO user)
         {
             CommonCalculate(user);
 
-            await db.Users.UpdateAsync(mapper.Map<User>(user));
+            var updateFlat = mapper.Map<Flat>(user.Flat);
+
+            await db.Flats.UpdateAsync(updateFlat);
+
+            //await db.Users.UpdateAsync(mapper.Map<User>(user));
         }
 
         public void CalculateForTest(UserDTO user)
@@ -97,8 +115,8 @@ namespace USCtest.BLL.Services
 
             if (user.Flat.Taxes.Count != 0)
             {
-                var lastTaxDate = user.Flat.Taxes.Max(x => x.Date);
-                lastTax = user.Flat.Taxes.FirstOrDefault(f => f.Date == lastTaxDate);
+                lastTax = user.Flat.Taxes.OrderBy(x => x.Date).Last();
+                //lastTax = user.Flat.Taxes.FirstOrDefault(f => f.Date == lastTaxDate);
             }
            
             var peopleCount = user.Flat.Users.Count;

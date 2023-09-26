@@ -9,6 +9,7 @@ namespace USCtest.BLL.Interfaces
 {
     public interface ITaxService
     {
-        Task Calculate(UserDTO user);
+        Task CalculateTax(UserDTO user);
+        Task TaxPayment(UserDTO user, int taxId);
     }
 }
