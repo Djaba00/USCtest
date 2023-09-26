@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using USCtext.DAL.Entities;
+using USCtest.DAL.Entities;
 
-namespace USCtext.DAL.Interfaces
+namespace USCtest.DAL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {

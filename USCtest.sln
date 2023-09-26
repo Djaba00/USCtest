@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "USCtext.DAL", "USCtext.DAL\USCtext.DAL.csproj", "{14EAF09B-4C32-4817-AE1D-2717B5404F3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "USCtest.DAL", "USCtest.DAL\USCtest.DAL.csproj", "{14EAF09B-4C32-4817-AE1D-2717B5404F3D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "USCtest.BLL", "USCtest.BLL\USCtest.BLL.csproj", "{EE01E3D1-EC55-447C-A3E2-9FB80FB1B731}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "USCtest.WebClient", "USCtest.WebClient\USCtest.WebClient.csproj", "{7EA59B83-AF80-460F-A6FD-CDD0CCF1179E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USCtest.BLLTests", "USCtest.BLLTests\USCtest.BLLTests.csproj", "{1E268D94-8E5C-478E-B92A-FBC566A175E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "USCtest.BLLTests", "USCtest.BLLTests\USCtest.BLLTests.csproj", "{1E268D94-8E5C-478E-B92A-FBC566A175E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

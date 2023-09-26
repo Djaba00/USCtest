@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using USCtext.DAL.DataContext;
-using USCtext.DAL.Entities;
-using USCtext.DAL.Interfaces;
-using USCtext.DAL.Repositories;
+using USCtest.DAL.DataContext;
+using USCtest.DAL.Entities;
+using USCtest.DAL.Interfaces;
+using USCtest.DAL.Repositories;
 
 namespace USCtest.BLL.Configurations
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace USCtext.DAL.Entities
+namespace USCtest.DAL.Entities
 {
     public class Flat
     {

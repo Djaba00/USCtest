@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace USCtext.DAL.Interfaces
+namespace USCtest.DAL.Interfaces
 {
     public interface IEntityRepository<T>
         where T : class

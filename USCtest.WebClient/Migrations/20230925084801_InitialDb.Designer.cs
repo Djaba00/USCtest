@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using USCtext.DAL.DataContext;
+using USCtest.DAL.DataContext;
 
 namespace USCtest.WebClient.Migrations
 {
@@ -146,7 +146,7 @@ namespace USCtest.WebClient.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("USCtext.DAL.Entities.Flat", b =>
+            modelBuilder.Entity("USCtest.DAL.Entities.Flat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -188,7 +188,7 @@ namespace USCtest.WebClient.Migrations
                     b.ToTable("Flats");
                 });
 
-            modelBuilder.Entity("USCtext.DAL.Entities.Tax", b =>
+            modelBuilder.Entity("USCtest.DAL.Entities.Tax", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -221,7 +221,7 @@ namespace USCtest.WebClient.Migrations
                     b.ToTable("Taxes");
                 });
 
-            modelBuilder.Entity("USCtext.DAL.Entities.User", b =>
+            modelBuilder.Entity("USCtest.DAL.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -321,7 +321,7 @@ namespace USCtest.WebClient.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("USCtext.DAL.Entities.User", null)
+                    b.HasOne("USCtest.DAL.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -330,7 +330,7 @@ namespace USCtest.WebClient.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("USCtext.DAL.Entities.User", null)
+                    b.HasOne("USCtest.DAL.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -345,7 +345,7 @@ namespace USCtest.WebClient.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("USCtext.DAL.Entities.User", null)
+                    b.HasOne("USCtest.DAL.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -354,32 +354,32 @@ namespace USCtest.WebClient.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("USCtext.DAL.Entities.User", null)
+                    b.HasOne("USCtest.DAL.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("USCtext.DAL.Entities.Tax", b =>
+            modelBuilder.Entity("USCtest.DAL.Entities.Tax", b =>
                 {
-                    b.HasOne("USCtext.DAL.Entities.Flat", "Flat")
+                    b.HasOne("USCtest.DAL.Entities.Flat", "Flat")
                         .WithMany("Taxes")
                         .HasForeignKey("FlatId1");
 
                     b.Navigation("Flat");
                 });
 
-            modelBuilder.Entity("USCtext.DAL.Entities.User", b =>
+            modelBuilder.Entity("USCtest.DAL.Entities.User", b =>
                 {
-                    b.HasOne("USCtext.DAL.Entities.Flat", "Flat")
+                    b.HasOne("USCtest.DAL.Entities.Flat", "Flat")
                         .WithMany("Users")
                         .HasForeignKey("FlatId1");
 
                     b.Navigation("Flat");
                 });
 
-            modelBuilder.Entity("USCtext.DAL.Entities.Flat", b =>
+            modelBuilder.Entity("USCtest.DAL.Entities.Flat", b =>
                 {
                     b.Navigation("Taxes");
 

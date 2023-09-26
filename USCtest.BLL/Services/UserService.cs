@@ -6,8 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using USCtest.BLL.Models;
 using USCtest.BLL.Interfaces;
-using USCtext.DAL.Entities;
-using USCtext.DAL.Interfaces;
+using USCtest.DAL.Entities;
+using USCtest.DAL.Interfaces;
 
 namespace USCtest.BLL.Services
 {

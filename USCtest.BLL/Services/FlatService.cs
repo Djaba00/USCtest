@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using USCtest.BLL.Models;
 using USCtest.BLL.Interfaces;
-using USCtext.DAL.Entities;
-using USCtext.DAL.Interfaces;
+using USCtest.DAL.Entities;
+using USCtest.DAL.Interfaces;
 
 namespace USCtest.BLL.Services
 {

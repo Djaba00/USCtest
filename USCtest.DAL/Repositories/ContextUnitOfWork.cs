@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
-using USCtext.DAL.DataContext;
-using USCtext.DAL.Entities;
-using USCtext.DAL.Interfaces;
+using USCtest.DAL.DataContext;
+using USCtest.DAL.Entities;
+using USCtest.DAL.Interfaces;
 
-namespace USCtext.DAL.Repositories
+namespace USCtest.DAL.Repositories
 {
     public class ContextUnitOfWork : IUnitOfWork
     {

@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using USCtest.BLL.BusinesModels.Helpers;
 using USCtest.BLL.Models;
 using USCtest.BLL.Interfaces;
-using USCtext.DAL.Entities;
-using USCtext.DAL.Interfaces;
-using USCtext.DAL.Repositories;
+using USCtest.DAL.Entities;
+using USCtest.DAL.Interfaces;
+using USCtest.DAL.Repositories;
 
 namespace USCtest.BLL.Services
 {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using USCtext.DAL.DataContext.ModelConfigurations;
-using USCtext.DAL.Entities;
+using USCtest.DAL.DataContext.ModelConfigurations;
+using USCtest.DAL.Entities;
 
-namespace USCtext.DAL.DataContext
+namespace USCtest.DAL.DataContext
 {
     public class ApplicationContext : IdentityDbContext<User>
     {

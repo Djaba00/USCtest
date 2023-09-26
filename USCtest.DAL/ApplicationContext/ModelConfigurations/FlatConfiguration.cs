@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using USCtext.DAL.Entities;
+using USCtest.DAL.Entities;
 
-namespace USCtext.DAL.DataContext.ModelConfigurations
+namespace USCtest.DAL.DataContext.ModelConfigurations
 {
     public class FlatConfiguration : IEntityTypeConfiguration<Flat>
     {

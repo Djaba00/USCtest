@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using USCtest.BLL.Models;
-using USCtext.DAL.Entities;
+using USCtest.DAL.Entities;
 
 namespace USCtest.BLL.Configurations
 {

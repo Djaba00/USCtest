@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace USCtext.DAL.Entities
+namespace USCtest.DAL.Entities
 {
     public class Tax
     {
