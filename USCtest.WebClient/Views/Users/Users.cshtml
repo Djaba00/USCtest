@@ -1,0 +1,37 @@
+﻿@    using USCtest.WebClient.ViewModels;
+    using USCtest.WebClient.ViewModels.UserVM;
+
+@model List<UserViewModel>;
+
+<div class="users-container">
+    <form asp-area="" asp-controller="User" asp-action="Users" method="get">
+        <input name="name" class="form-control" placeholder="Название продукта" />
+        <button type="submit">
+            Поиск
+        </button>
+    </form>
+
+    @foreach (var user in Model)
+    {
+        <div class="users-container">
+            <div class="user-info-container">
+                <p>@user.FullName</p>
+                <p>@user.PassportSeries @user.PassportNumber</p>
+                @foreach(var flat in user.Flats)
+                {
+                    <p>@flat</p>
+                }
+            </div>
+            <a asp-area="" asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id" method="get">
+                <button type="submit">
+                    Редактировать
+                </button>
+            </a>
+            <form asp-area="" asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.Id" method="post">
+                <button type="submit">
+                    Удалить
+                </button>
+            </form>
+        </div>
+    }
+</div>

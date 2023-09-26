@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 using USCtest.BLL.Configurations;
+using USCtest.WebClient.Configurations;
 
 namespace USCtest.WebClient
 {
@@ -20,12 +22,14 @@ namespace USCtest.WebClient
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connctionStrinng = Configuration.GetConnectionString("DefaultConnection");
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             // добавить profile AM
-            services.AddBllServices();
+            services.AddBllServices(profile: new MappingProfile());
 
-            services.AddSqLiteContext(connctionStrinng);
+            services.AddPLLServices();
+
+            services.AddSqLiteContext(connectionString);
 
 
             services.AddControllersWithViews();

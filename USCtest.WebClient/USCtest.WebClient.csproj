@@ -17,4 +17,8 @@
     <ProjectReference Include="..\USCtest.BLL\USCtest.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Database\" />
+  </ItemGroup>
+
 </Project>
