@@ -19,8 +19,6 @@ namespace USCtext.DAL.Entities
         public bool IsHotWatherDevice { get; set; }
         public bool IsElectricPowerDevice { get; set; }
 
-        public int Residents { get; set; }
-
         public virtual ICollection<User> Users { get; set; }
 
         public virtual ICollection<Tax> Taxes { get; set; }

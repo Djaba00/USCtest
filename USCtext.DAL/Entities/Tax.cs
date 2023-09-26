@@ -33,6 +33,6 @@ namespace USCtext.DAL.Entities
         public decimal ElectricityNightCost { get; set; }
 
         public string FlatId { get; set; }
-        public Flat Flat { get; set; }
+        public virtual Flat Flat { get; set; }
     }
 }

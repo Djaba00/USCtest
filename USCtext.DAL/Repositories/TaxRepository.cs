@@ -26,7 +26,7 @@ namespace USCtext.DAL.Repositories
 
         public async Task<Tax?> GetAsync(int id)
         {
-            var result = await db.Taxes.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+            var result = await db.Taxes.Include(t => t.Flat).AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
             return result;
         }

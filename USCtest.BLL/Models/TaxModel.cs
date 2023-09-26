@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using USCtext.DAL.Entities;
 
-namespace USCtest.BLL.DTOEntities
+namespace USCtest.BLL.Models
 {
-    public class TaxDTO
+    public class TaxModel
     {
         public int Id { get; set; }
 
@@ -31,8 +26,5 @@ namespace USCtest.BLL.DTOEntities
 
         public double ElectricityNightVolume { get; set; }
         public decimal ElectricityNightCost { get; set; }
-
-        public string FlatId { get; set; }
-        public Flat Flat { get; set; }
     }
 }
