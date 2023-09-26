@@ -24,7 +24,7 @@ namespace USCtest.BLLTests.Services
 
         public async Task<UserDTO> GetUserById(string id)
         {
-            var user = await db.UserManager.FindByIdAsync(id);
+            var user = await db.UsersManager.FindByIdAsync(id);
 
             if (user == null)
             {
@@ -38,7 +38,7 @@ namespace USCtest.BLLTests.Services
 
         public async Task<List<UserDTO>> GetUsersByName(string name)
         {
-            var users = await db.UserManager.Users.Where(c => c.GetFullName().Contains(name)).ToListAsync();
+            var users = await db.UsersManager.Users.Where(c => c.GetFullName().Contains(name)).ToListAsync();
 
             if (users == null)
             {
@@ -63,7 +63,7 @@ namespace USCtest.BLLTests.Services
             {
                 var user = mapper.Map<User>(userDto);
 
-                await db.UserManager.CreateAsync(user);
+                await db.UsersManager.CreateAsync(user);
             }
             else
             {
@@ -77,11 +77,11 @@ namespace USCtest.BLLTests.Services
             {
                 var user = mapper.Map<User>(userDto);
 
-                var currentUser = await db.UserManager.FindByIdAsync(user.Id);
+                var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
 
                 if (currentUser != null)
                 {
-                    await db.UserManager.ChangePasswordAsync(currentUser, currentPassword, newPassword);
+                    await db.UsersManager.ChangePasswordAsync(currentUser, currentPassword, newPassword);
                 }
                 else
                 {
@@ -99,12 +99,12 @@ namespace USCtest.BLLTests.Services
             if (userDto != null)
             {
                 var user = mapper.Map<User>(userDto);
-                var currentUser = await db.UserManager.FindByIdAsync(user.Id);
+                var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
 
                 if (currentUser != null)
                 {
                     currentUser.Flat = user.Flat;
-                    await db.UserManager.UpdateAsync(currentUser);
+                    await db.UsersManager.UpdateAsync(currentUser);
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace USCtest.BLLTests.Services
             if (userDto != null)
             {
                 var user = mapper.Map<User>(userDto);
-                var currentUser = await db.UserManager.FindByIdAsync(user.Id);
+                var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
 
                 if (currentUser != null)
                 {
@@ -134,7 +134,7 @@ namespace USCtest.BLLTests.Services
                     currentUser.PassportNumber = user.PassportNumber;
                     currentUser.Flat = currentUser.Flat; 
 
-                    await db.UserManager.UpdateAsync(currentUser);
+                    await db.UsersManager.UpdateAsync(currentUser);
                 }
                 else
                 {
@@ -149,11 +149,11 @@ namespace USCtest.BLLTests.Services
 
         public async Task DeleteUser(string id)
         {
-            var currentUser = await db.UserManager.FindByIdAsync(id);
+            var currentUser = await db.UsersManager.FindByIdAsync(id);
 
             if (currentUser != null)
             {
-                await db.UserManager.DeleteAsync(currentUser);
+                await db.UsersManager.DeleteAsync(currentUser);
             }
             else
             {
