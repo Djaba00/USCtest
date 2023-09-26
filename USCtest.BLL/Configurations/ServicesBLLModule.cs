@@ -41,12 +41,11 @@ namespace USCtest.BLL.Configurations
         /// <param name="connectionString"></param>
         /// <param name="clientProjectName" - для миграций></param>
         /// <returns></returns>
-        public static IServiceCollection AddSqLiteContext(this IServiceCollection services, string connectionString, string clientProjectName)
+        public static IServiceCollection AddSqLiteContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ApplicationContext>(
-                options => options.UseSqlite(connectionString,
-                opts => opts.MigrationsAssembly(clientProjectName)))
-                .AddIdentity<User, IdentityRole>(options =>
+                options => options.UseSqlite(connectionString))
+                .AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     options.Password.RequiredLength = 8;
                     options.Password.RequireNonAlphanumeric = false;

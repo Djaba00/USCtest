@@ -12,7 +12,7 @@ namespace USCtest.DAL.Interfaces
     {
         IEntityRepository<Flat> Flats { get; }
         IEntityRepository<Tax> Taxes { get; }
-        UserManager<User> UsersManager { get; }
+        UserManager<ApplicationUser> UsersManager { get; }
 
         Task SaveAsync();
     }

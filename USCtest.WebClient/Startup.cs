@@ -25,7 +25,7 @@ namespace USCtest.WebClient
             // добавить profile AM
             services.AddBllServices();
 
-            services.AddSqLiteContext(connctionStrinng, "USCtest.WebClient");
+            services.AddSqLiteContext(connctionStrinng);
 
 
             services.AddControllersWithViews();

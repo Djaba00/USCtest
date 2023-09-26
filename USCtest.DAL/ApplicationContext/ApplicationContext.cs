@@ -5,12 +5,12 @@ using USCtest.DAL.Entities;
 
 namespace USCtest.DAL.DataContext
 {
-    public class ApplicationContext : IdentityDbContext<User>
+    public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Flat> Flats { get; set; }
+        public DbSet<Registration> Registrations { get; set; }
         public DbSet<Tax> Taxes { get; set; }
-
-        public ApplicationContext() { }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {

@@ -19,9 +19,11 @@ namespace USCtest.DAL.Entities
         public bool IsHotWatherDevice { get; set; }
         public bool IsElectricPowerDevice { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<UserProfile> Users { get; set; }
 
         public virtual ICollection<Tax> Taxes { get; set; }
+
+        public virtual ICollection<Registration> Registrations { get; set; }
 
         public string GetFullAddress()
         {

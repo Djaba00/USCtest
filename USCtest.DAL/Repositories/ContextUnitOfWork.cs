@@ -13,11 +13,11 @@ namespace USCtest.DAL.Repositories
 
         FlatRepository FlatRepository { get; set; }
         TaxRepository TaxRepository { get; set; }
-        UserManager<User> UserManager { get; set; }
+        UserManager<ApplicationUser> UserManager { get; set; }
 
         private bool disposed = false;
 
-        public ContextUnitOfWork(ApplicationContext context, UserManager<User> userManager)
+        public ContextUnitOfWork(ApplicationContext context, UserManager<ApplicationUser> userManager)
         {
             db = context;
 
@@ -48,7 +48,7 @@ namespace USCtest.DAL.Repositories
             }
         }
 
-        public UserManager<User> UsersManager
+        public UserManager<ApplicationUser> UsersManager
         {
             get
             {

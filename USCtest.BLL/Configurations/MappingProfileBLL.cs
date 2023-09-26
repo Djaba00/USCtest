@@ -14,7 +14,7 @@ namespace USCtest.BLL.Configurations
     {
         public MappingProfileBLL()
         {
-            CreateMap<User, UserModel>().ReverseMap();
+            CreateMap<ApplicationUser, UserModel>().ReverseMap();
 
             CreateMap<FlatModel, Flat>().ReverseMap();
 

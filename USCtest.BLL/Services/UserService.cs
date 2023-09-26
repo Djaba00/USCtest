@@ -8,6 +8,7 @@ using USCtest.BLL.Models;
 using USCtest.BLL.Interfaces;
 using USCtest.DAL.Entities;
 using USCtest.DAL.Interfaces;
+using System.Security.Claims;
 
 namespace USCtest.BLL.Services
 {
@@ -38,7 +39,7 @@ namespace USCtest.BLL.Services
 
         public async Task<List<UserModel>> GetUsersByName(string name)
         {
-            var users = await db.UsersManager.Users.Where(c => c.GetFullName().Contains(name)).ToListAsync();
+            var users = await db.UsersManager.Users.Where(c => c.UserProfile.GetFullName().Contains(name)).ToListAsync();
 
             if (users != null)
             {
@@ -61,7 +62,7 @@ namespace USCtest.BLL.Services
         {
             if (userDto != null)
             {
-                var user = mapper.Map<User>(userDto);
+                var user = mapper.Map<ApplicationUser>(userDto);
 
                 await db.UsersManager.CreateAsync(user);
             }
@@ -75,7 +76,7 @@ namespace USCtest.BLL.Services
         {
             if (userDto != null)
             {
-                var user = mapper.Map<User>(userDto);
+                var user = mapper.Map<ApplicationUser>(userDto);
 
                 var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
 
@@ -98,12 +99,12 @@ namespace USCtest.BLL.Services
         {
             if (userDto != null)
             {
-                var user = mapper.Map<User>(userDto);
+                var user = mapper.Map<ApplicationUser>(userDto);
                 var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
 
                 if (currentUser != null)
                 {
-                    currentUser.Flat = user.Flat;
+                    currentUser.UserProfile.Flats = user.UserProfile.Flats;
                     await db.UsersManager.UpdateAsync(currentUser);
                 }
                 else
@@ -117,22 +118,26 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task UpdateUserAccount(UserModel userDto)
+        public async Task UpdateUserAccount(UserModel userModel)
         {
-            if (userDto != null)
+            if (userModel != null)
             {
-                var user = mapper.Map<User>(userDto);
+                var user = mapper.Map<ApplicationUser>(userModel);
                 var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
 
                 if (currentUser != null)
                 {
-                    currentUser.FirstName = user.FirstName;
-                    currentUser.LastName = user.LastName;
-                    currentUser.MiddleName = user.MiddleName;
                     currentUser.Email = user.Email;
-                    currentUser.PassportSeries = user.PassportSeries;
-                    currentUser.PassportNumber = user.PassportNumber;
-                    currentUser.Flat = currentUser.Flat;
+                    currentUser.UserName = user.UserName;
+
+                    currentUser.UserProfile.FirstName = user.UserProfile.FirstName;
+                    currentUser.UserProfile.LastName = user.UserProfile.LastName;
+                    currentUser.UserProfile.MiddleName = user.UserProfile.MiddleName;
+                    
+                    currentUser.UserProfile.PassportSeries = user.UserProfile.PassportSeries;
+                    currentUser.UserProfile.PassportNumber = user.UserProfile.PassportNumber;
+
+                    currentUser.UserProfile.Flats = user.UserProfile.Flats;
 
                     await db.UsersManager.UpdateAsync(currentUser);
                 }

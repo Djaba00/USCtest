@@ -9,9 +9,9 @@ using USCtest.DAL.Entities;
 
 namespace USCtest.DAL.DataContext.ModelConfigurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class UserConfiguration : IEntityTypeConfiguration<UserProfile>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
             builder.ToTable("Users");
 
