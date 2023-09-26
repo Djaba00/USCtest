@@ -21,5 +21,13 @@ namespace USCtest.BLL.Models
         public List<TaxModel> Taxes { get; set; }
 
         public FlatIndications Indications { get; set; }
+
+        public string GetFullAddress()
+        {
+            if (Building is null)
+                return $"ул. {Street} д. {StreetNumber} кв. {FlatNumber}";
+            else
+                return $"ул. {Street} д. {StreetNumber} строение {Building} кв. {FlatNumber}";
+        }
     }
 }

@@ -21,15 +21,5 @@ namespace USCtest.DAL.Entities
         public virtual ICollection<Registration> Registrations { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
-
-        public string GetFullName()
-        {
-            return $"{LastName} {FirstName} {MiddleName}";
-        }
-
-        public string GetFullPassport()
-        {
-            return PassportSeries + PassportNumber;
-        }
     }
 }

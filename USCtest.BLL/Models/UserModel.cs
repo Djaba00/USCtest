@@ -23,5 +23,15 @@ namespace USCtest.BLL.Models
         public List<FlatModel> Flats { get; set; }
 
         public List<RegistrationModel> Registrations { get; set; }
+
+        public string GetFullName()
+        {
+            return $"{LastName} {FirstName} {MiddleName}";
+        }
+
+        public string GetFullPassport()
+        {
+            return PassportSeries + PassportNumber;
+        }
     }
 }

@@ -23,7 +23,26 @@ namespace USCtest.BLL.Services
             this.mapper = mapper;
         }
 
-        public async Task<UserModel> GetUserById(string id)
+        public async Task<List<UserModel>> GetAllUsersAsync()
+        {
+            var users = await db.UsersManager.Users.ToListAsync();
+
+            if (users != null)
+            {
+                var userModels = new List<UserModel>();
+
+                foreach (var user in users)
+                {
+                    userModels.Add(mapper.Map<UserModel>(user));
+                }
+
+                return userModels;
+            }
+
+            return null;
+        }
+
+        public async Task<UserModel> GetUserByIdAsync(string id)
         {
             var user = await db.UsersManager.FindByIdAsync(id);
 
@@ -37,7 +56,7 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task<List<UserModel>> GetUsersByName(string name)
+        public async Task<List<UserModel>> GetUsersByNameAsync(string name)
         {
             var users = await db.UsersManager.Users.Where(c => c.UserProfile.GetFullName().Contains(name)).ToListAsync();
 
@@ -58,7 +77,7 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task CreateUser(UserModel userDto)
+        public async Task CreateUserAsync(UserModel userDto)
         {
             if (userDto != null)
             {
@@ -72,30 +91,7 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task ChangePassword(UserModel userDto, string currentPassword, string newPassword)
-        {
-            if (userDto != null)
-            {
-                var user = mapper.Map<ApplicationUser>(userDto);
-
-                var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
-
-                if (currentUser != null)
-                {
-                    await db.UsersManager.ChangePasswordAsync(currentUser, currentPassword, newPassword);
-                }
-                else
-                {
-                    throw new Exception("Пользователь не найден");
-                }
-            }
-            else
-            {
-                throw new Exception("Не корректный формат данных пользователя");
-            }
-        }
-
-        public async Task ChangeRegistration(UserModel userDto)
+        public async Task ChangeRegistrationAsync(UserModel userDto)
         {
             if (userDto != null)
             {
@@ -118,7 +114,7 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task UpdateUserAccount(UserModel userModel)
+        public async Task UpdateUserAccountAsync(UserModel userModel)
         {
             if (userModel != null)
             {
@@ -152,7 +148,7 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task DeleteUser(string id)
+        public async Task DeleteUserAsync(string id)
         {
             var currentUser = await db.UsersManager.FindByIdAsync(id);
 

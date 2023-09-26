@@ -20,7 +20,7 @@ namespace USCtest.BLL.Configurations
         /// <returns></returns>
         public static IServiceCollection AddBllServices(this IServiceCollection services, Profile profile = null)
         {
-            
+            services.AddScoped<IUnitOfWork, ContextUnitOfWork>();
                 
             var mapperConfig = new MapperConfiguration((v) =>
             {
