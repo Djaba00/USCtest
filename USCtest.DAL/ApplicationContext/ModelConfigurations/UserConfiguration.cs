@@ -15,6 +15,10 @@ namespace USCtest.DAL.DataContext.ModelConfigurations
         {
             builder.ToTable("Users");
 
+            builder.HasOne(u => u.ApplicationUser)
+                .WithOne(au => au.UserProfile)
+                .HasForeignKey<UserProfile>(u => u.Id);
+
             builder.Property(u => u.FirstName).IsRequired();
 
             builder.Property(u => u.LastName).IsRequired();

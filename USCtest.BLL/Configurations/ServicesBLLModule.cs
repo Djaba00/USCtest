@@ -44,7 +44,8 @@ namespace USCtest.BLL.Configurations
         public static IServiceCollection AddSqLiteContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ApplicationContext>(
-                options => options.UseSqlite(connectionString))
+                options => options.UseSqlite(connectionString, opt =>
+                opt.MigrationsAssembly("USCtest.DAL")))
                 .AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     options.Password.RequiredLength = 8;
