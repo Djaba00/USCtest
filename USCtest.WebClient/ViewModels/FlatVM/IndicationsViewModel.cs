@@ -1,8 +1,7 @@
-﻿namespace USCtest.WebClient.ViewModels.TaxVM
+﻿namespace USCtest.WebClient.ViewModels.FlatVM
 {
-    public class CreateTaxViewModel
+    public class IndicationsViewModel
     {
-        public int FlatId { get; set; }
         public double ColdWather { get; set; }
         public double HotWaterHeat { get; set; }
         public double Electricity { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using USCtest.DAL.Interfaces;
 
 namespace USCtest.DAL.Repositories
 {
-    public class FlatRepository : IEntityRepository<Flat>
+    public class FlatRepository : IFlatRepository<Flat>
     {
         ApplicationContext db;
 
@@ -19,17 +20,36 @@ namespace USCtest.DAL.Repositories
 
         public async Task<IEnumerable<Flat>> GetAllAsync()
         {
-            return await db.Flats.Include(f => f.Users).Include(f => f.Taxes).ToListAsync();
+            return await db.Flats
+                .Include(f => f.Taxes)
+                .Include(f => f.Registrations)
+                .ToListAsync();
         }
 
-        public async Task<Flat?> GetAsync(int id)
+        public async Task<Flat> GetByIdAsync(int id)
         {
-            var result = await db.Flats.Include(f => f.Users).Include(f => f.Taxes).AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+            var result = await db.Flats
+                .Include(f => f.Taxes)
+                .Include(f => f.Registrations)
+                    .ThenInclude(r => r.User)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             return result;
         }
 
-        public async Task<Flat?> CreateAsync(Flat entity)
+        public async Task<IEnumerable<Flat>> GetByAddress(string name)
+        {
+            var result = await db.Flats
+                .Include(f => f.Taxes)
+                .Include(f => f.Registrations)
+                    .ThenInclude(r => r.User)
+                .Where(x => x.GetFullAddress().Contains(name))
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<Flat> CreateAsync(Flat entity)
         {
             var result = await db.Flats.AddAsync(entity);
             await db.SaveChangesAsync();
@@ -39,7 +59,7 @@ namespace USCtest.DAL.Repositories
 
         public async Task UpdateAsync(Flat entity)
         {
-            var flat = await GetAsync(entity.Id);
+            var flat = await GetByIdAsync(entity.Id);
 
             if(flat != null)
             {
@@ -53,7 +73,7 @@ namespace USCtest.DAL.Repositories
                 flat.IsElectricPowerDevice = entity.IsElectricPowerDevice;
 
                 flat.Taxes = entity.Taxes;
-                flat.Users = entity.Users;
+                //flat.Users = entity.Users;
 
                 db.Flats.Update(flat);
 
@@ -63,7 +83,7 @@ namespace USCtest.DAL.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            var flat = await GetAsync(id);
+            var flat = await GetByIdAsync(id);
 
             db.Flats.Remove(flat);
 

@@ -1,24 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using USCtest.DAL.DataContext.ModelConfigurations.Generators;
 using USCtest.DAL.Entities;
 
 namespace USCtest.DAL.DataContext.ModelConfigurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<UserProfile>
+    public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
     {
         public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
-            builder.ToTable("Users");
+            builder.ToTable("Users").HasKey(u => u.Id);
 
             builder.HasOne(u => u.ApplicationUser)
                 .WithOne(au => au.UserProfile)
-                .HasForeignKey<UserProfile>(u => u.Id);
+                .HasForeignKey<UserProfile>(u => u.ApplicationUserId); 
 
             builder.Property(u => u.FirstName).IsRequired();
 
@@ -26,12 +20,6 @@ namespace USCtest.DAL.DataContext.ModelConfigurations
 
             builder.Property(u => u.PassportSeries).HasColumnType("nchar(4)");
             builder.Property(u => u.PassportNumber).HasColumnType("nchar(6)");
-
-            var usersGenerator = new UsersGenerator();
-
-            var userList = usersGenerator.Generate(20);
-
-            builder.HasData(userList);
         }
     }
 }

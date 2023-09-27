@@ -51,7 +51,8 @@ namespace USCtest.BLL.Configurations
         {
             services.AddDbContext<ApplicationContext>(
                 options => options.UseSqlite(connectionString, opt =>
-                opt.MigrationsAssembly("USCtest.DAL")))
+                opt.MigrationsAssembly("USCtest.DAL"))
+                .EnableSensitiveDataLogging())
                 .AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     options.Password.RequiredLength = 8;

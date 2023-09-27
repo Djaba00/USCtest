@@ -25,7 +25,7 @@ namespace USCtest.BLL.Services
             this.mapper = mapper;
         }
 
-        public async Task TaxPayment(int taxId)
+        public async Task TaxPaymentAsync(int taxId)
         {
             var currentTax = await db.Taxes.GetAsync(taxId);
 
@@ -37,7 +37,7 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task CreateTax(FlatModel flatModel)
+        public async Task CreateTaxAsync(FlatModel flatModel)
         {
             flatModel.Taxes.Add(CommonCalculate(flatModel));
 
@@ -46,7 +46,7 @@ namespace USCtest.BLL.Services
             await db.Flats.UpdateAsync(updateFlat);
         }
 
-        public async Task UpdateTax(int taxId)
+        public async Task UpdateTaxAsync(int taxId)
         {
             var currentTax = await db.Taxes.GetAsync(taxId);
 
@@ -134,7 +134,7 @@ namespace USCtest.BLL.Services
                 //lastTax = flatModel.Taxes.FirstOrDefault(f => f.Date == lastTaxDate);
             }
            
-            var peopleCount = flatModel.Users.Count;
+            var peopleCount = flatModel.Registrations.Where(r => r.RemoveDate > DateTime.MinValue).Count();
 
             switch (indications)
             {
@@ -156,8 +156,6 @@ namespace USCtest.BLL.Services
                         return currentVolume;
                     }
 
-                    break;
-
                 case Indications.HotWaterHeat:
 
                     var watherHeatVolume = flatModel.Indications.HotWaterHeat;
@@ -176,8 +174,6 @@ namespace USCtest.BLL.Services
 
                         return currentVolume;
                     }
-
-                    break;
 
                 case Indications.HotWatherThermalEnergy:
 
@@ -199,8 +195,6 @@ namespace USCtest.BLL.Services
                         return currentVolume;
                     }
 
-                    break;
-
                 case Indications.Electricity:
 
                     var electricityVolume = flatModel.Indications.Electricity;
@@ -209,15 +203,11 @@ namespace USCtest.BLL.Services
 
                     return currentElectricityVolume;
 
-                    break;
-
                 case Indications.ElectricityDay:
 
                     var electricityDayVolume = flatModel.Indications.ElectricityDay - lastTax.ElectricityDayVolume;
 
                     return electricityDayVolume;
-
-                    break;
 
                 case Indications.ElectricityNight:
 
@@ -225,11 +215,8 @@ namespace USCtest.BLL.Services
 
                     return electricityNightVolume;
 
-                    break;
-
                 default:
                     return 0;
-                    break;
             }
         }
 
@@ -239,31 +226,24 @@ namespace USCtest.BLL.Services
             {
                 case Indications.ColdWater:
                     return Convert.ToDecimal(volume * Fees.ColdWather);
-                    break;
 
                 case Indications.HotWaterHeat:
                     return Convert.ToDecimal(volume * Fees.HotWatherHeat);
-                    break;
 
                 case Indications.HotWatherThermalEnergy:
                     return Convert.ToDecimal(volume * Fees.HotWatherThermalEnergy);
-                    break;
 
                 case Indications.Electricity:
                     return Convert.ToDecimal(volume * Fees.ColdWather);
-                    break;
 
                 case Indications.ElectricityDay:
                     return Convert.ToDecimal(flatModel.Indications.ElectricityDay * Fees.ElectricityDay);
-                    break;
 
                 case Indications.ElectricityNight:
                     return Convert.ToDecimal(flatModel.Indications.ElectricityNight * Fees.ElectricityNight);
-                    break;
 
                 default:
                     return 0;
-                    break;
             }
         }
 

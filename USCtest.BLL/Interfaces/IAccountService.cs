@@ -9,6 +9,6 @@ namespace USCtest.BLL.Interfaces
 {
     public interface IAccountService
     {
-        Task ChangePassword(UserModel userDto, string currentPassword, string newPassword);
+        Task ChangePassword(UserProfileModel userDto, string currentPassword, string newPassword);
     }
 }

@@ -10,7 +10,7 @@ using USCtest.DAL.Interfaces;
 
 namespace USCtest.DAL.Repositories
 {
-    public class TaxRepository : IEntityRepository<Tax>
+    public class TaxRepository : ITaxRepository<Tax>
     {
         ApplicationContext db;
 
@@ -21,17 +21,21 @@ namespace USCtest.DAL.Repositories
 
         public async Task<IEnumerable<Tax>> GetAllAsync()
         {
-            return await db.Taxes.ToListAsync();
+            return await db.Taxes
+                .Include(t => t.Flat)
+                .ToListAsync();
         }
 
-        public async Task<Tax?> GetAsync(int id)
+        public async Task<Tax> GetAsync(int id)
         {
-            var result = await db.Taxes.Include(t => t.Flat).AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+            var result = await db.Taxes
+                .Include(t => t.Flat)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             return result;
         }
 
-        public async Task<Tax?> CreateAsync(Tax entity)
+        public async Task<Tax> CreateAsync(Tax entity)
         {
             var result = await db.Taxes.AddAsync(entity);
             await db.SaveChangesAsync();

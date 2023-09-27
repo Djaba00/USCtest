@@ -23,17 +23,17 @@ namespace USCtest.BLL.Services
         }
 
 
-        public async Task ChangePassword(UserModel userDto, string currentPassword, string newPassword)
+        public async Task ChangePassword(UserProfileModel userDto, string currentPassword, string newPassword)
         {
             if (userDto != null)
             {
                 var user = mapper.Map<ApplicationUser>(userDto);
 
-                var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
+                var currentUser = await db.Accounts.FindByIdAsync(user.Id);
 
                 if (currentUser != null)
                 {
-                    await db.UsersManager.ChangePasswordAsync(currentUser, currentPassword, newPassword);
+                    await db.Accounts.ChangePasswordAsync(currentUser, currentPassword, newPassword);
                 }
                 else
                 {

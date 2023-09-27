@@ -8,7 +8,7 @@ namespace USCtest.DAL.Entities
 {
     public class Registration
     {
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public virtual UserProfile User { get; set; }
 
         public int FlatId { get; set; }

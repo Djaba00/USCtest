@@ -10,12 +10,12 @@ namespace USCtest.BLL.Interfaces
 {
     public interface IUserService
     {
-        Task<List<UserModel>> GetAllUsersAsync();
-        Task<UserModel> GetUserByIdAsync(string id);
-        Task<List<UserModel>> GetUsersByNameAsync(string name);
-        Task CreateUserAsync(UserModel userDto);
-        Task ChangeRegistrationAsync(UserModel userDto);
-        Task UpdateUserAccountAsync(UserModel userDto);
-        Task DeleteUserAsync(string id);
+        Task<List<UserProfileModel>> GetAllUsersAsync();
+        Task<UserProfileModel> GetUserByIdAsync(int id);
+        Task<List<UserProfileModel>> GetUsersByNameAsync(string name);
+        Task CreateUserAsync(UserProfileModel userDto);
+        Task ChangeRegistrationAsync(UserProfileModel userDto);
+        Task UpdateUserProfileAsync(UserProfileModel userDto);
+        Task DeleteUserAsync(int id);
     }
 }

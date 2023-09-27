@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using USCtest.BLL.Models;
 using USCtest.BLL.Interfaces;
 using USCtest.DAL.Entities;
@@ -25,9 +21,28 @@ namespace USCtest.BLL.Services
             this.mapper = mapper;
         }
 
-        public async Task<FlatModel> GetFlatById(int id)
+        public async Task<List<FlatModel>> GetAllFlatsAsync()
         {
-            var flat = await db.Flats.GetAsync(id);
+            var flats = await db.Flats.GetAllAsync();
+
+            if (flats != null)
+            {
+                var flatModels = new List<FlatModel>();
+
+                foreach (var flat in flats)
+                {
+                    flatModels.Add(mapper.Map<FlatModel>(flat));
+                }
+
+                return flatModels;
+            }
+
+            return null;
+        }
+
+        public async Task<FlatModel> GetFlatByIdAsync(int id)
+        {
+            var flat = await db.Flats.GetByIdAsync(id);
 
             if (flat != null)
             {
@@ -39,22 +54,20 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task<List<FlatModel>> GetFlatsByAddress(string address)
+        public async Task<List<FlatModel>> GetFlatsByAddressAsync(string address)
         {
-            var allflats = await db.Flats.GetAllAsync();
+            var flats = await db.Flats.GetByAddress(address);
 
-            var findedFlats = allflats.Where(f => f.GetFullAddress().Contains(address));
-
-            if (findedFlats != null)
+            if (flats != null)
             {
-                var flatsDto = new List<FlatModel>();
+                var flatModel = new List<FlatModel>();
 
-                foreach (var flat in findedFlats)
+                foreach (var flat in flats)
                 {
-                    flatsDto.Add(mapper.Map<FlatModel>(flat));
+                    flatModel.Add(mapper.Map<FlatModel>(flat));
                 }
 
-                return flatsDto;
+                return flatModel;
             }
             else
             {
@@ -62,11 +75,51 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task CreateFlat(FlatModel flatDTO)
+        public async Task<FlatModel> GetFlatByAddressAsync(string address)
         {
-            if (flatDTO != null)
+            var flats = await GetFlatsByAddressAsync(address);
+
+            var flat = flats.FirstOrDefault();
+
+            if (flats != null)
             {
-                var flat = mapper.Map<Flat>(flatDTO);
+                var flatModel = mapper.Map<FlatModel>(flat);
+
+                return flatModel;
+            }
+            else
+            {
+                throw new Exception("Квартира не найдена");
+            }
+        }
+
+        public async Task AddRegistration(FlatModel flatModel, RegistrationModel registrationModel)
+        {
+            if (registrationModel.RegistrationDate != DateTime.MinValue && registrationModel != null)
+            {
+
+                flatModel.Registrations.Add(registrationModel);
+
+                var flat = mapper.Map<Flat>(flatModel);
+
+                await db.Flats.UpdateAsync(flat);
+            }
+            else
+            {
+                throw new Exception("Некорректный формат времени");
+            }
+        }
+
+        public async Task UpdateRegistration(int flatId, RegistrationModel registrationModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task CreateFlatAsync(FlatModel flatModel)
+        {
+            if (flatModel != null)
+            {
+                var flat = mapper.Map<Flat>(flatModel);
 
                 await db.Flats.CreateAsync(flat);
             }
@@ -76,12 +129,12 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task UpdateFlat(FlatModel flatDTO)
+        public async Task UpdateFlatAsync(FlatModel flatModel)
         {
-            if (flatDTO != null)
+            if (flatModel != null)
             {
-                var flat = mapper.Map<Flat>(flatDTO);
-                var currentFlat = await db.Flats.GetAsync(flat.Id);
+                var flat = mapper.Map<Flat>(flatModel);
+                var currentFlat = await db.Flats.GetByIdAsync(flat.Id);
 
                 if (currentFlat != null)
                 {
@@ -95,12 +148,11 @@ namespace USCtest.BLL.Services
                     currentFlat.IsHotWatherDevice = flat.IsHotWatherDevice;
                     currentFlat.IsElectricPowerDevice = flat.IsElectricPowerDevice;
 
-                    currentFlat.Users = flat.Users;
+                    //currentFlat.Users = flat.Users;
                     currentFlat.Taxes = flat.Taxes;
 
                     await db.Flats.UpdateAsync(currentFlat);
-                }
-                
+                } 
             }
             else
             {
@@ -108,9 +160,9 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public Task DeleteUser(int id)
+        public Task DeleteUserAsync(int id)
         {
             throw new NotImplementedException();
-        }  
+        }
     }
 }

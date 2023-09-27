@@ -30,7 +30,7 @@ namespace USCtest.BLL.Models
 
         public decimal SummaryCost { get; set; }
 
-        public string FlatId { get; set; }
+        public int FlatId { get; set; }
         public virtual FlatModel Flat { get; set; }
     }
 }

@@ -23,17 +23,17 @@ namespace USCtest.BLL.Services
             this.mapper = mapper;
         }
 
-        public async Task<List<UserModel>> GetAllUsersAsync()
+        public async Task<List<UserProfileModel>> GetAllUsersAsync()
         {
-            var users = await db.UsersManager.Users.ToListAsync();
+            var users = await db.UserProfiles.GetAllAsync();
 
             if (users != null)
             {
-                var userModels = new List<UserModel>();
+                var userModels = new List<UserProfileModel>();
 
                 foreach (var user in users)
                 {
-                    userModels.Add(mapper.Map<UserModel>(user));
+                    userModels.Add(mapper.Map<UserProfileModel>(user));
                 }
 
                 return userModels;
@@ -42,13 +42,13 @@ namespace USCtest.BLL.Services
             return null;
         }
 
-        public async Task<UserModel> GetUserByIdAsync(string id)
+        public async Task<UserProfileModel> GetUserByIdAsync(int id)
         {
-            var user = await db.UsersManager.FindByIdAsync(id);
+            var user = await db.UserProfiles.GetAsync(id);
 
             if (user != null)
             {
-                return mapper.Map<UserModel>(user);
+                return mapper.Map<UserProfileModel>(user);
             }
             else
             {
@@ -56,17 +56,19 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task<List<UserModel>> GetUsersByNameAsync(string name)
+        public async Task<List<UserProfileModel>> GetUsersByNameAsync(string name)
         {
-            var users = await db.UsersManager.Users.Where(c => c.UserProfile.GetFullName().Contains(name)).ToListAsync();
+            var allUsers = await db.UserProfiles.GetAllAsync();
+
+            var users = allUsers.Where(c => c.GetFullName().Contains(name));
 
             if (users != null)
             {
-                var usersDto = new List<UserModel>();
+                var usersDto = new List<UserProfileModel>();
 
                 foreach (var user in users)
                 {
-                    usersDto.Add(mapper.Map<UserModel>(user));
+                    usersDto.Add(mapper.Map<UserProfileModel>(user));
                 }
 
                 return usersDto;
@@ -77,13 +79,13 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task CreateUserAsync(UserModel userDto)
+        public async Task CreateUserAsync(UserProfileModel userDto)
         {
             if (userDto != null)
             {
-                var user = mapper.Map<ApplicationUser>(userDto);
+                var user = mapper.Map<UserProfile>(userDto);
 
-                await db.UsersManager.CreateAsync(user);
+                await db.UserProfiles.CreateAsync(user);
             }
             else
             {
@@ -91,51 +93,18 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task ChangeRegistrationAsync(UserModel userDto)
-        {
-            if (userDto != null)
-            {
-                var user = mapper.Map<ApplicationUser>(userDto);
-                var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
-
-                if (currentUser != null)
-                {
-                    currentUser.UserProfile.Flats = user.UserProfile.Flats;
-                    await db.UsersManager.UpdateAsync(currentUser);
-                }
-                else
-                {
-                    throw new Exception("Пользователь не найден");
-                }
-            }
-            else
-            {
-                throw new Exception("Не корректный формат данных пользователя");
-            }
-        }
-
-        public async Task UpdateUserAccountAsync(UserModel userModel)
+        // правки
+        public async Task ChangeRegistrationAsync(UserProfileModel userModel)
         {
             if (userModel != null)
             {
-                var user = mapper.Map<ApplicationUser>(userModel);
-                var currentUser = await db.UsersManager.FindByIdAsync(user.Id);
+                var user = mapper.Map<UserProfile>(userModel);
+                var currentUser = await db.UserProfiles.GetAsync(user.Id);
 
                 if (currentUser != null)
                 {
-                    currentUser.Email = user.Email;
-                    currentUser.UserName = user.UserName;
-
-                    currentUser.UserProfile.FirstName = user.UserProfile.FirstName;
-                    currentUser.UserProfile.LastName = user.UserProfile.LastName;
-                    currentUser.UserProfile.MiddleName = user.UserProfile.MiddleName;
-                    
-                    currentUser.UserProfile.PassportSeries = user.UserProfile.PassportSeries;
-                    currentUser.UserProfile.PassportNumber = user.UserProfile.PassportNumber;
-
-                    currentUser.UserProfile.Flats = user.UserProfile.Flats;
-
-                    await db.UsersManager.UpdateAsync(currentUser);
+                    currentUser.Flats = user.Flats;
+                    await db.UserProfiles.UpdateAsync(currentUser);
                 }
                 else
                 {
@@ -148,13 +117,45 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task DeleteUserAsync(string id)
+        public async Task UpdateUserProfileAsync(UserProfileModel userModel)
         {
-            var currentUser = await db.UsersManager.FindByIdAsync(id);
+            if (userModel != null)
+            {
+                var user = mapper.Map<UserProfile>(userModel);
+
+                var currentUser = await db.UserProfiles.GetAsync(user.Id);
+
+                if (currentUser != null)
+                {
+                    currentUser.FirstName = user.FirstName;
+                    currentUser.LastName = user.LastName;
+                    currentUser.MiddleName = user.MiddleName;
+                    
+                    currentUser.PassportSeries = user.PassportSeries;
+                    currentUser.PassportNumber = user.PassportNumber;
+
+                    currentUser.Flats = user.Flats;
+
+                    await db.UserProfiles.UpdateAsync(currentUser);
+                }
+                else
+                {
+                    throw new Exception("Пользователь не найден");
+                }
+            }
+            else
+            {
+                throw new Exception("Не корректный формат данных пользователя");
+            }
+        }
+
+        public async Task DeleteUserAsync(int id)
+        {
+            var currentUser = await db.UserProfiles.GetAsync(id);
 
             if (currentUser != null)
             {
-                await db.UsersManager.DeleteAsync(currentUser);
+                await db.UserProfiles.DeleteAsync(id);
             }
             else
             {

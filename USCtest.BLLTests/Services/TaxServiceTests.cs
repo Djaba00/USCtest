@@ -33,14 +33,14 @@ namespace USCtest.BLL.Services.Tests
                 IsColdWatherDevice = true,
                 IsElectricPowerDevice = true,
                 IsHotWatherDevice = true,
-                Users = new List<UserModel>(),
+                Users = new List<UserProfileModel>(),
                 Taxes = new List<TaxModel>(),
                 Indications = indications,
             };
 
             var userFlats = new List<FlatModel>() { flat };
 
-            var user = new UserModel()
+            var user = new UserProfileModel()
             {
                 FirstName = "Test",
                 LastName = "Testovich",

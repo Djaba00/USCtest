@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using USCtest.BLL.Models;
+using USCtest.WebClient.ViewModels.RegistrationVM;
+using USCtest.WebClient.ViewModels.TaxVM;
 
 namespace USCtest.WebClient.ViewModels.FlatVM
 {
@@ -15,6 +17,10 @@ namespace USCtest.WebClient.ViewModels.FlatVM
 
         public int Residents { get; set; }
 
-        public List<string> Users { get; set; }
+        public decimal Debt { get; set; }
+
+        public List<RegistrationViewModel> Registrations { get; set; }
+
+        public List<TaxViewModel> Taxes { get; set; }
     }
 }

@@ -16,9 +16,11 @@ namespace USCtest.BLL.Models
         public bool IsHotWatherDevice { get; set; }
         public bool IsElectricPowerDevice { get; set; }
 
-        public List<UserModel> Users { get; set; }
+        //public List<UserProfileModel> Users { get; set; }
 
         public List<TaxModel> Taxes { get; set; }
+
+        public List<RegistrationModel> Registrations { get; set; }
 
         public FlatIndications Indications { get; set; }
 
@@ -28,6 +30,18 @@ namespace USCtest.BLL.Models
                 return $"ул. {Street} д. {StreetNumber} кв. {FlatNumber}";
             else
                 return $"ул. {Street} д. {StreetNumber} строение {Building} кв. {FlatNumber}";
+        }
+
+        public decimal GetDebt()
+        {
+            decimal debt = 0;
+
+            foreach (var tax in  Taxes)
+            {
+                debt += tax.IsPayed ? 0 : tax.SummaryCost; 
+            }
+
+            return debt;
         }
     }
 }

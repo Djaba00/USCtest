@@ -14,7 +14,7 @@ namespace USCtest.WebClient.ViewModels.TaxVM
         public double ElectricityDay { get; set; }
         public double ElectricityNight { get; set; }
 
-        public string FlatId { get; set; }
+        public int FlatId { get; set; }
         public virtual string Flat { get; set; }
     }
 }

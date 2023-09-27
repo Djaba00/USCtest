@@ -9,8 +9,8 @@ namespace USCtest.BLL.Interfaces
 {
     public interface ITaxService
     {
-        Task CreateTax(FlatModel flatModel);
-        Task UpdateTax(int taxId);
-        Task TaxPayment(int taxId);
+        Task CreateTaxAsync(FlatModel flatModel);
+        Task UpdateTaxAsync(int taxId);
+        Task TaxPaymentAsync(int taxId);
     }
 }

@@ -13,7 +13,8 @@ namespace USCtest.DAL.Repositories
 
         FlatRepository FlatRepository { get; set; }
         TaxRepository TaxRepository { get; set; }
-        UserManager<ApplicationUser> UserManager { get; set; }
+        UserProfileRepository UserProfileRepository { get; set; }
+        UserManager<ApplicationUser> AccountManager { get; set; }
 
         private bool disposed = false;
 
@@ -21,10 +22,10 @@ namespace USCtest.DAL.Repositories
         {
             db = context;
 
-            UserManager = userManager;
+            AccountManager = userManager;
         }
 
-        public IEntityRepository<Flat> Flats
+        public IFlatRepository<Flat> Flats
         {
             get
             {
@@ -36,7 +37,7 @@ namespace USCtest.DAL.Repositories
             }
         }
 
-        public IEntityRepository<Tax> Taxes
+        public ITaxRepository<Tax> Taxes
         {
             get
             {
@@ -48,11 +49,23 @@ namespace USCtest.DAL.Repositories
             }
         }
 
-        public UserManager<ApplicationUser> UsersManager
+        public UserManager<ApplicationUser> Accounts
         {
             get
             {
-                return UserManager;
+                return AccountManager;
+            }
+        }
+
+        public IUserProfileRepository<UserProfile> UserProfiles
+        {
+            get
+            {
+                if (UserProfileRepository == null)
+                {
+                    UserProfileRepository = new UserProfileRepository(db);
+                }
+                return UserProfileRepository;
             }
         }
 

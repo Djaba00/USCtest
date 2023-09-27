@@ -10,9 +10,10 @@ namespace USCtest.DAL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IEntityRepository<Flat> Flats { get; }
-        IEntityRepository<Tax> Taxes { get; }
-        UserManager<ApplicationUser> UsersManager { get; }
+        IFlatRepository<Flat> Flats { get; }
+        ITaxRepository<Tax> Taxes { get; }
+        IUserProfileRepository<UserProfile> UserProfiles { get; }
+        UserManager<ApplicationUser> Accounts { get; }
 
         Task SaveAsync();
     }

@@ -9,10 +9,14 @@ namespace USCtest.BLL.Interfaces
 {
     public interface IFlatService
     {
-        Task<FlatModel> GetFlatById(int id);
-        Task<List<FlatModel>> GetFlatsByAddress(string address);
-        Task CreateFlat(FlatModel flatDTO);
-        Task UpdateFlat(FlatModel flatDTO);
-        Task DeleteUser(int id);
+        Task<List<FlatModel>> GetAllFlatsAsync();
+        Task<FlatModel> GetFlatByIdAsync(int id);
+        Task<FlatModel> GetFlatByAddressAsync(string name);
+        Task<List<FlatModel>> GetFlatsByAddressAsync(string address);
+        Task AddRegistration(FlatModel flatModel, RegistrationModel registrationModel);
+        Task UpdateRegistration(int flatId, RegistrationModel registrationModel);
+        Task CreateFlatAsync(FlatModel flatModel);
+        Task UpdateFlatAsync(FlatModel flatModel);
+        Task DeleteUserAsync(int id);
     }
 }

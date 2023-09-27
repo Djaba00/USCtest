@@ -1,0 +1,55 @@
+﻿@using USCtest.WebClient.ViewModels.TaxVM;
+@using USCtest.WebClient.ViewModels.FlatVM;
+
+@model CreateIndicationsViewModel;
+
+<div>
+    <h4>Передача показаний</h4>
+    <form class="newTax-form" method="post" asp-controller="Flat" asp-action="AddIndications">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="mrgn">
+            <input asp-for="FlatId" value="@Model.FlatId" class="form-control" placeholder="Name" readonly />
+        </div>
+        <label>
+            Холодное водоснабжение
+        </label>
+        <div class="mrgn">
+            <input asp-for="IndicationsViewModel.ColdWather" value="@Model.IndicationsViewModel.ColdWather" class="form-control" placeholder="Холодное водоснабжение" />
+        </div>
+        <label>
+            Горячее водоснабжение
+        </label>
+        <div class="mrgn">
+            <input asp-for="IndicationsViewModel.HotWaterHeat" value="@Model.IndicationsViewModel.HotWaterHeat" class="form-control" placeholder="Горячее водоснабжение" />
+        </div>
+        
+        @if (Model.IsElectricPowerDevice)
+        {
+            <label>
+                Электроэнергия (дневной тариф)
+            </label>
+            <div class="mrgn">
+                <input asp-for="IndicationsViewModel.ElectricityDay" value="@Model.IndicationsViewModel.ElectricityDay" class="form-control" placeholder="Электроэнергия (дневной тариф)" />
+            </div>
+            <label>
+                Электроэнергия (ночной тариф)
+            </label>
+            <div class="mrgn">
+                <input asp-for="IndicationsViewModel.ElectricityNight" value="@Model.IndicationsViewModel.ElectricityNight" class="form-control" placeholder="Электроэнергия (ночной тариф)" />
+            </div>
+        }
+        else
+        {
+            <label>
+                Электроэнергия
+            </label>
+            <div class="mrgn">
+                <input asp-for="IndicationsViewModel.Electricity" value="@Model.IndicationsViewModel.Electricity" class="form-control" placeholder="Электроэнергия" />
+            </div>
+        }
+
+        <div>
+            <input class="enter_submit" type="submit" value="Отправить" />
+        </div>
+    </form>
+</div>

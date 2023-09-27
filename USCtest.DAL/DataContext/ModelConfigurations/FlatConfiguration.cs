@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using USCtest.DAL.DataContext.ModelConfigurations.Generators;
 using USCtest.DAL.Entities;
 
 namespace USCtest.DAL.DataContext.ModelConfigurations
@@ -38,13 +32,6 @@ namespace USCtest.DAL.DataContext.ModelConfigurations
                         j.HasKey(t => new { t.UserId, t.FlatId });
                         j.ToTable("Registrations");
                     });
-
-
-            var flatsGenerator = new UsersGenerator();
-
-            var flatsList = flatsGenerator.Generate(20);
-
-            builder.HasData(flatsList);
         }
     }
 }
