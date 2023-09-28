@@ -11,16 +11,24 @@
         </button>
     </form>
 
+    <div class="user-header-container">
+        <p>ФИО</p>
+        <p>Паспорт</p>
+        <p>Квартиры</p>
+    </div>
+
     @foreach (var user in Model)
     {
-        <div class="users-container">
+        <div class="list-container">
             <div class="user-info-container">
                 <p>@user.FullName</p>
                 <p>@user.Passport</p>
+                <div class="user-flats">
                 @foreach (var flat in user.Registrations.Select(r => r.Flat))
                 {
                     <p>@flat.Address</p>
                 }
+                </div>
             </div>
             <a asp-area="" asp-controller="User" asp-action="UserProfile" asp-route-id="@user.Id" method="get">
                 <button type="submit">

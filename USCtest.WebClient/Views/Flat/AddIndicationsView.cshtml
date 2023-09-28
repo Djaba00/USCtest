@@ -7,9 +7,7 @@
     <h4>Передача показаний</h4>
     <form class="newTax-form" method="post" asp-controller="Flat" asp-action="AddIndications">
         <div asp-validation-summary="ModelOnly"></div>
-        <div class="mrgn">
-            <input asp-for="FlatId" value="@Model.FlatId" class="form-control" placeholder="Name" readonly />
-        </div>
+        @Html.HiddenFor(model => model.FlatId)
         <label>
             Холодное водоснабжение
         </label>

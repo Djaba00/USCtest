@@ -4,28 +4,23 @@
 @model UserViewModel;
 
 <div class="users-container">
-    <form asp-area="" asp-controller="Users" asp-action="List" method="get">
-        <input name="name" class="form-control" placeholder="ФИО пользователя" />
-        <button type="submit">
-            Поиск
-        </button>
-    </form>
-
-    <div class="user-profile-container">
-        <div class="user-info-container">
-            <p>@Model.FullName</p>
-            <p>@Model.Passport</p>
+    <div class="userprofile-container">
+        <div class="userprofile-info-container">
+            <h4>ФИО: @Model.FullName</h4>
+            <h4>Паспорт: @Model.Passport</h4>
         </div>
-
-        <div class="user-flats">
+        <h3>Квартиры</h3>
+        <div class="useruserprofile-flats">
             @foreach (var flat in Model.Registrations.Select(r => r.Flat))
             {
-                <div class="user-flat-info-container">
-                    <p>@flat.Address</p>
-                    <p>@flat.IsColdWatherDevice</p>
-                    <p>@flat.IsHotWatherDevice</p>
-                    <p>@flat.IsElectricPowerDevice</p>
-                    <p>@flat.Debt;</p>
+                <div class="useruserprofile-flat-info-container">
+                    <div class="flat-info-contatiner">
+                        <p>@flat.Address</p>
+                        <p>Прибор учета ХВС: @flat.IsColdWatherDevice</p>
+                        <p>Прибор учета ГВС: @flat.IsHotWatherDevice</p>
+                        <p>Прибор учета ЭЭ: @flat.IsElectricPowerDevice</p>
+                        <p>Задолженность: @flat.Debt</p>
+                    </div>
 
                     <a asp-area="" asp-controller="Flat" asp-action="AddIndications" asp-route-id="@flat.Id" method="get">
                         <button type="submit">
