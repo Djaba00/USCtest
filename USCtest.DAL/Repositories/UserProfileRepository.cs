@@ -25,6 +25,7 @@ namespace USCtest.DAL.Repositories
             return await db.UserProfiles
                 .Include(u => u.Registrations)
                     .ThenInclude(r => r.Flat)
+                        .ThenInclude(f => f.Taxes)
                 .Include(u => u.ApplicationUser)
                 .ToListAsync();
         }
@@ -34,6 +35,7 @@ namespace USCtest.DAL.Repositories
             var result = await db.UserProfiles
                 .Include(u => u.Registrations)
                     .ThenInclude(r => r.Flat)
+                        .ThenInclude(f => f.Taxes)
                 .Include(u => u.ApplicationUser)
                 .FirstOrDefaultAsync(x => x.Id == id);
             return result;

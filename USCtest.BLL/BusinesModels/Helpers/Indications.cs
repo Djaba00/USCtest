@@ -10,7 +10,7 @@ namespace USCtest.BLL.BusinesModels.Helpers
     {
         ColdWater, // ХВС
         HotWaterHeat, // ГВС Теплоноситель
-        HotWatherThermalEnergy, // ГВС Тепловая энергия
+        HotWaterThermalEnergy, // ГВС Тепловая энергия
         Electricity, // ЭЭ
         ElectricityDay, // ЭЭ день
         ElectricityNight, // ЭЭ Ночь

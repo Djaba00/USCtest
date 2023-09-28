@@ -12,8 +12,8 @@ namespace USCtest.DAL.DataContext.ModelConfigurations
 
             builder.Property(f => f.Street).IsRequired();
 
-            builder.Property(f => f.IsColdWatherDevice).HasDefaultValue(false);
-            builder.Property(f => f.IsHotWatherDevice).HasDefaultValue(false);
+            builder.Property(f => f.IsColdWaterDevice).HasDefaultValue(false);
+            builder.Property(f => f.IsHotWaterDevice).HasDefaultValue(false);
             builder.Property(f => f.IsElectricPowerDevice).HasDefaultValue(false);
 
             builder.HasMany(f => f.Users)
@@ -31,6 +31,8 @@ namespace USCtest.DAL.DataContext.ModelConfigurations
                     {;
                         j.HasKey(t => new { t.UserId, t.FlatId });
                         j.ToTable("Registrations");
+                        j.Property(r => r.RegistrationDate).HasColumnType("datetime2");
+                        j.Property(r => r.RemoveDate).HasColumnType("datetime2").HasDefaultValue(null);
                     });
         }
     }

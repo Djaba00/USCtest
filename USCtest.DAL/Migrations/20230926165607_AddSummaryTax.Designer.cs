@@ -222,7 +222,7 @@ namespace USCtest.DAL.Migrations
                     b.Property<int>("FlatNumber")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsColdWatherDevice")
+                    b.Property<bool>("IsColdWaterDevice")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(false);
@@ -232,7 +232,7 @@ namespace USCtest.DAL.Migrations
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(false);
 
-                    b.Property<bool>("IsHotWatherDevice")
+                    b.Property<bool>("IsHotWaterDevice")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(false);
@@ -276,10 +276,10 @@ namespace USCtest.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("ColdWatherCost")
+                    b.Property<decimal>("ColdWaterCost")
                         .HasColumnType("TEXT");
 
-                    b.Property<double>("ColdWatherVolume")
+                    b.Property<double>("ColdWaterVolume")
                         .HasColumnType("REAL");
 
                     b.Property<DateTime>("Date")
@@ -309,16 +309,16 @@ namespace USCtest.DAL.Migrations
                     b.Property<int?>("FlatId1")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("HotWatherHeatCost")
+                    b.Property<decimal>("HotWaterHeatCost")
                         .HasColumnType("TEXT");
 
-                    b.Property<double>("HotWatherHeatVolume")
+                    b.Property<double>("HotWaterHeatVolume")
                         .HasColumnType("REAL");
 
-                    b.Property<decimal>("HotWatherThermalEnergyCost")
+                    b.Property<decimal>("HotWaterThermalEnergyCost")
                         .HasColumnType("TEXT");
 
-                    b.Property<double>("HotWatherThermalEnergyVolume")
+                    b.Property<double>("HotWaterThermalEnergyVolume")
                         .HasColumnType("REAL");
 
                     b.Property<bool>("IsPayed")

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using USCtest.BLL.BusinesModels;
 
 namespace USCtest.BLL.Models
@@ -12,8 +14,8 @@ namespace USCtest.BLL.Models
         public int? Building { get; set; }
         public int FlatNumber { get; set; }
 
-        public bool IsColdWatherDevice { get; set; }
-        public bool IsHotWatherDevice { get; set; }
+        public bool IsColdWaterDevice { get; set; }
+        public bool IsHotWaterDevice { get; set; }
         public bool IsElectricPowerDevice { get; set; }
 
         //public List<UserProfileModel> Users { get; set; }
@@ -22,7 +24,7 @@ namespace USCtest.BLL.Models
 
         public List<RegistrationModel> Registrations { get; set; }
 
-        public FlatIndications Indications { get; set; }
+        public IndicationsModel Indications { get; set; }
 
         public string GetFullAddress()
         {
@@ -41,7 +43,12 @@ namespace USCtest.BLL.Models
                 debt += tax.IsPayed ? 0 : tax.SummaryCost; 
             }
 
-            return debt;
+            return Math.Round(debt, 2);
+        }
+
+        public int GetResidentsCount()
+        {
+            return Registrations.Where(r => r.RemoveDate is null || r.RemoveDate == DateTime.MinValue || r.RemoveDate >= DateTime.Now).Count();
         }
     }
 }

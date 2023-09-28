@@ -15,8 +15,8 @@ namespace USCtest.DAL.Entities
         public int? Building { get; set; }
         public int FlatNumber { get; set; }
 
-        public bool IsColdWatherDevice { get; set; }
-        public bool IsHotWatherDevice { get; set; }
+        public bool IsColdWaterDevice { get; set; }
+        public bool IsHotWaterDevice { get; set; }
         public bool IsElectricPowerDevice { get; set; }
 
         public virtual ICollection<UserProfile> Users { get; set; }

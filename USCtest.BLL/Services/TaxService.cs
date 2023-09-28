@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using USCtest.BLL.BusinesModels.Helpers;
 using USCtest.BLL.Models;
 using USCtest.BLL.Interfaces;
 using USCtest.DAL.Entities;
 using USCtest.DAL.Interfaces;
-using USCtest.DAL.Repositories;
+using System.Security.Cryptography.Xml;
+using System.Collections.Generic;
 
 namespace USCtest.BLL.Services
 {
@@ -62,12 +60,12 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public void CalculateForTest(FlatModel flatModel)
+        public void CalculateForTest(FlatModel flatModel, DateTime? customDate = null)
         {
-            CommonCalculate(flatModel);
+            flatModel.Taxes.Add(CommonCalculate(flatModel, customDate));
         }
 
-        private TaxModel CommonCalculate(FlatModel flatModel)
+        private TaxModel CommonCalculate(FlatModel flatModel, DateTime? customDate = null)
         {
             var coldWaterVolume = CalculateVolume(flatModel, Indications.ColdWater);
             var coldWaterCost = CalculateCost(flatModel, Indications.ColdWater, coldWaterVolume);
@@ -75,8 +73,8 @@ namespace USCtest.BLL.Services
             var hotWaterHeatVolume = CalculateVolume(flatModel, Indications.HotWaterHeat);
             var hotWaterHeatCost = CalculateCost(flatModel, Indications.HotWaterHeat, hotWaterHeatVolume);
 
-            var hotWaterHotWaterThermalEnergytVolume = CalculateVolume(flatModel, Indications.HotWatherThermalEnergy);
-            var hotWaterHotWaterThermalEnergytCost = CalculateCost(flatModel, Indications.HotWatherThermalEnergy, hotWaterHotWaterThermalEnergytVolume);
+            var hotWaterHotWaterThermalEnergytVolume = CalculateVolume(flatModel, Indications.HotWaterThermalEnergy);
+            var hotWaterHotWaterThermalEnergytCost = CalculateCost(flatModel, Indications.HotWaterThermalEnergy, hotWaterHotWaterThermalEnergytVolume);
 
             double electricityDayVolume = 0;
             decimal electricityDayCost = 0;
@@ -89,10 +87,10 @@ namespace USCtest.BLL.Services
             if (flatModel.IsElectricPowerDevice)
             {
                 electricityDayVolume = CalculateVolume(flatModel, Indications.ElectricityDay);
-                electricityDayCost = CalculateCost(flatModel, Indications.ElectricityDay);
+                electricityDayCost = CalculateCost(flatModel, Indications.ElectricityDay, electricityDayVolume);
 
                 electricityNightVolume = CalculateVolume(flatModel, Indications.ElectricityNight);
-                electricityNightCost = CalculateCost(flatModel, Indications.ElectricityNight);
+                electricityNightCost = CalculateCost(flatModel, Indications.ElectricityNight, electricityNightVolume);
             }
             else
             {
@@ -105,13 +103,14 @@ namespace USCtest.BLL.Services
 
             var newTaxModel = new TaxModel()
             {
-                Date = DateTime.Now,
+                Date = customDate is null? DateTime.Now.Date : customDate.Value,
+                Residents = flatModel.GetResidentsCount(),
                 ColdWaterVolume = coldWaterVolume,
-                ColdWatherCost = coldWaterCost,
-                HotWatherHeatVolume = hotWaterHeatVolume,
-                HotWatherHeatCost = hotWaterHeatCost,
-                HotWatherThermalEnergyVolume = hotWaterHotWaterThermalEnergytVolume,
-                HotWatherThermalEnergyCost = hotWaterHotWaterThermalEnergytCost,
+                ColdWaterCost = coldWaterCost,
+                HotWaterHeatVolume = hotWaterHeatVolume,
+                HotWaterHeatCost = hotWaterHeatCost,
+                HotWaterThermalEnergyVolume = hotWaterHotWaterThermalEnergytVolume,
+                HotWaterThermalEnergyCost = hotWaterHotWaterThermalEnergytCost,
                 ElectricPowerVolume = electricyVolume,
                 ElectricPowerCost = electricyCost,
                 ElectricityDayVolume = electricityDayVolume,
@@ -126,63 +125,107 @@ namespace USCtest.BLL.Services
 
         protected double CalculateVolume(FlatModel flatModel, Indications indications)
         {
-            TaxModel lastTax = new TaxModel(); 
+            TaxModel lastTax = new TaxModel();
+
+            double daysCount = Normatives.BillingPeriod;
+
+            bool IsEqualResidents = true;
+
+            var residents = new List<int>();
 
             if (flatModel.Taxes.Count != 0)
             {
+                IsEqualResidents = flatModel.GetResidentsCount() == lastTax.Residents;
+
                 lastTax = flatModel.Taxes.OrderBy(x => x.Date).Last();
-                //lastTax = flatModel.Taxes.FirstOrDefault(f => f.Date == lastTaxDate);
+                daysCount = Math.Ceiling((DateTime.Now.Date - lastTax.Date).TotalDays);
+
+                foreach (var user in flatModel.Registrations )
+                {
+                    if (lastTax.Date != DateTime.MinValue && user.RemoveDate < DateTime.Now.Date && user.RemoveDate > lastTax.Date)
+                    {
+                        var days = user.RemoveDate.Value.Subtract(lastTax.Date).Days;
+                        residents.Add(days);
+                    }
+                }
             }
            
-            var peopleCount = flatModel.Registrations.Where(r => r.RemoveDate > DateTime.MinValue).Count();
+            var peopleCount = flatModel.GetResidentsCount();
 
             switch (indications)
             {
                 case Indications.ColdWater:
-                    var currentColdWatherVolume = flatModel.Indications.ColdWather;
+                    
 
-                    if (flatModel.IsColdWatherDevice)
+                    if (flatModel.IsColdWaterDevice)
                     {
+                        var currentColdWaterVolume = flatModel.Indications.ColdWater;
+
                         var lastVolume = lastTax.ColdWaterVolume;
 
-                        var currentVolume = lastVolume == default ? currentColdWatherVolume : currentColdWatherVolume - lastVolume;
+                        var currentVolume = lastVolume == default ? currentColdWaterVolume : currentColdWaterVolume - lastVolume;
 
                         return currentVolume;
                     }
                     else
                     {
-                        var currentVolume = peopleCount * Normatives.ColdWather;
+                        var currentVolume = peopleCount * daysCount * Normatives.ColdWater / Normatives.BillingPeriod;
+
+                        if (!IsEqualResidents)
+                        {
+                            foreach (var days in residents)
+                            {
+                                currentVolume += days * Normatives.ColdWater / Normatives.BillingPeriod;
+                            }
+                        }
 
                         return currentVolume;
                     }
 
                 case Indications.HotWaterHeat:
 
-                    var watherHeatVolume = flatModel.Indications.HotWaterHeat;
-
-                    if (flatModel.IsHotWatherDevice)
+                    if (flatModel.IsHotWaterDevice)
                     {
-                        var lastVolume = lastTax.HotWatherHeatVolume;
 
-                        var currentVolume = lastVolume == default ? watherHeatVolume : watherHeatVolume - lastVolume;
+                        var waterHeatVolume = flatModel.Indications.HotWaterHeat;
+
+                        var lastVolume = lastTax.HotWaterHeatVolume;
+
+                        var currentVolume = lastVolume == default ? waterHeatVolume : waterHeatVolume - lastVolume;
 
                         return currentVolume;
                     }
                     else
                     {
-                        var currentVolume = peopleCount * Normatives.HotWatherHeat;
+                        var currentVolume = peopleCount * daysCount * Normatives.HotWaterHeat / Normatives.BillingPeriod;
+
+                        if (!IsEqualResidents)
+                        {
+                            foreach (var days in residents)
+                            {
+                                currentVolume += days * Normatives.HotWaterHeat / Normatives.BillingPeriod;
+                            }
+                        }
 
                         return currentVolume;
                     }
 
-                case Indications.HotWatherThermalEnergy:
+                case Indications.HotWaterThermalEnergy:
 
-                    var watherHeat = flatModel.Indications.HotWaterHeat;
-                    var thermalEnergyVolume = watherHeat * Normatives.HotWatherThermalEnergy;
-
-                    if (flatModel.IsHotWatherDevice)
+                    if (flatModel.IsHotWaterDevice)
                     {
-                        var lastVolume = lastTax.HotWatherThermalEnergyVolume;
+                        var waterHeat = flatModel.Indications.HotWaterHeat - lastTax.HotWaterHeatVolume;
+                        var thermalEnergyVolume = waterHeat * daysCount * Normatives.HotWaterThermalEnergy / Normatives.BillingPeriod;
+
+                        if (!IsEqualResidents)
+                        {
+                            foreach (var days in residents)
+                            {
+                                thermalEnergyVolume += days * Normatives.HotWaterThermalEnergy / Normatives.BillingPeriod;
+                            }
+                        }
+
+                        var lastVolume = lastTax.HotWaterThermalEnergyVolume;
 
                         var currentVolume = lastVolume == default ? thermalEnergyVolume : thermalEnergyVolume - lastVolume;
 
@@ -190,18 +233,32 @@ namespace USCtest.BLL.Services
                     }
                     else
                     {
-                        var currentVolume = peopleCount * Normatives.HotWatherThermalEnergy;
+                        var currentVolume = peopleCount * daysCount * Normatives.HotWaterThermalEnergy / Normatives.BillingPeriod;
+
+                        if (!IsEqualResidents)
+                        {
+                            foreach (var days in residents)
+                            {
+                                currentVolume += days * Normatives.HotWaterThermalEnergy / Normatives.BillingPeriod;
+                            }
+                        }
 
                         return currentVolume;
                     }
 
                 case Indications.Electricity:
 
-                    var electricityVolume = flatModel.Indications.Electricity;
+                    var electricityVolume = peopleCount * daysCount * Normatives.Electricity / Normatives.BillingPeriod;
 
-                    var currentElectricityVolume = peopleCount * Normatives.Electricity;
+                    if (!IsEqualResidents)
+                    {
+                        foreach (var days in residents)
+                        {
+                            electricityVolume += days * Normatives.Electricity / Normatives.BillingPeriod;
+                        }
+                    }
 
-                    return currentElectricityVolume;
+                    return electricityVolume;
 
                 case Indications.ElectricityDay:
 
@@ -225,22 +282,22 @@ namespace USCtest.BLL.Services
             switch (indications)
             {
                 case Indications.ColdWater:
-                    return Convert.ToDecimal(volume * Fees.ColdWather);
+                    return Convert.ToDecimal(volume * Fees.ColdWater);
 
                 case Indications.HotWaterHeat:
-                    return Convert.ToDecimal(volume * Fees.HotWatherHeat);
+                    return Convert.ToDecimal(volume * Fees.HotWaterHeat);
 
-                case Indications.HotWatherThermalEnergy:
-                    return Convert.ToDecimal(volume * Fees.HotWatherThermalEnergy);
+                case Indications.HotWaterThermalEnergy:
+                    return Convert.ToDecimal(volume * Fees.HotWaterThermalEnergy);
 
                 case Indications.Electricity:
-                    return Convert.ToDecimal(volume * Fees.ColdWather);
+                    return Convert.ToDecimal(volume * Fees.Electricity);
 
                 case Indications.ElectricityDay:
-                    return Convert.ToDecimal(flatModel.Indications.ElectricityDay * Fees.ElectricityDay);
+                    return Convert.ToDecimal(volume * Fees.ElectricityDay);
 
                 case Indications.ElectricityNight:
-                    return Convert.ToDecimal(flatModel.Indications.ElectricityNight * Fees.ElectricityNight);
+                    return Convert.ToDecimal(volume * Fees.ElectricityNight);
 
                 default:
                     return 0;

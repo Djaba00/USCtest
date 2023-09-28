@@ -9,8 +9,8 @@ using USCtest.DAL.DataContext;
 namespace USCtest.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230927104519_EditUserProfileRel")]
-    partial class EditUserProfileRel
+    [Migration("20230928091109_RegistrationRDedit")]
+    partial class RegistrationRDedit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -261,10 +261,10 @@ namespace USCtest.DAL.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("RegistrationDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("RemoveDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("UserId", "FlatId");
 
@@ -348,9 +348,6 @@ namespace USCtest.DAL.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("FlatId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
                         .IsRequired()

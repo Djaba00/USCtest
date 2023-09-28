@@ -54,14 +54,14 @@ namespace USCtest.DAL.Repositories
                 tax.Date = entity.Date;
                 tax.IsPayed = entity.IsPayed;
 
-                tax.ColdWatherVolume = entity.ColdWatherVolume;
-                tax.ColdWatherCost = entity.ColdWatherCost;
+                tax.ColdWaterVolume = entity.ColdWaterVolume;
+                tax.ColdWaterCost = entity.ColdWaterCost;
 
-                tax.HotWatherHeatVolume = entity.HotWatherHeatVolume;
-                tax.HotWatherHeatCost = entity.HotWatherHeatCost;
+                tax.HotWaterHeatVolume = entity.HotWaterHeatVolume;
+                tax.HotWaterHeatCost = entity.HotWaterHeatCost;
 
-                tax.HotWatherThermalEnergyVolume = entity.HotWatherThermalEnergyVolume;
-                tax.HotWatherThermalEnergyCost = entity.HotWatherThermalEnergyCost;
+                tax.HotWaterThermalEnergyVolume = entity.HotWaterThermalEnergyVolume;
+                tax.HotWaterThermalEnergyCost = entity.HotWaterThermalEnergyCost;
 
                 tax.ElectricPowerVolume = entity.ElectricPowerVolume;
                 tax.ElectricityDayVolume = entity.ElectricityDayVolume;

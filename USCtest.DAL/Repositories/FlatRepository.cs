@@ -23,6 +23,7 @@ namespace USCtest.DAL.Repositories
             return await db.Flats
                 .Include(f => f.Taxes)
                 .Include(f => f.Registrations)
+                    .ThenInclude(r => r.User)
                 .ToListAsync();
         }
 
@@ -68,8 +69,8 @@ namespace USCtest.DAL.Repositories
                 flat.Building = entity.Building;
                 flat.FlatNumber = entity.FlatNumber;
 
-                flat.IsColdWatherDevice = entity.IsColdWatherDevice;
-                flat.IsHotWatherDevice = entity.IsHotWatherDevice;
+                flat.IsColdWaterDevice = entity.IsColdWaterDevice;
+                flat.IsHotWaterDevice = entity.IsHotWaterDevice;
                 flat.IsElectricPowerDevice = entity.IsElectricPowerDevice;
 
                 flat.Taxes = entity.Taxes;

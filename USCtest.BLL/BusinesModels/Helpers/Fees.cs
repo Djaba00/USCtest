@@ -8,9 +8,9 @@ namespace USCtest.BLL.BusinesModels.Helpers
 {
     public static class Fees
     {
-        public static readonly double ColdWather = 35.78;
-        public static readonly double HotWatherHeat = 35.78;
-        public static readonly double HotWatherThermalEnergy = 998.69;
+        public static readonly double ColdWater = 35.78;
+        public static readonly double HotWaterHeat = 35.78;
+        public static readonly double HotWaterThermalEnergy = 998.69;
         public static readonly double Electricity = 4.28;
         public static readonly double ElectricityDay = 4.9;
         public static readonly double ElectricityNight = 2.31;

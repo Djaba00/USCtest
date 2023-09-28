@@ -144,8 +144,8 @@ namespace USCtest.BLL.Services
                     currentFlat.Building = flat.Building;
                     currentFlat.FlatNumber = flat.FlatNumber;
 
-                    currentFlat.IsColdWatherDevice = flat.IsColdWatherDevice;
-                    currentFlat.IsHotWatherDevice = flat.IsHotWatherDevice;
+                    currentFlat.IsColdWaterDevice = flat.IsColdWaterDevice;
+                    currentFlat.IsHotWaterDevice = flat.IsHotWaterDevice;
                     currentFlat.IsElectricPowerDevice = flat.IsElectricPowerDevice;
 
                     //currentFlat.Users = flat.Users;
