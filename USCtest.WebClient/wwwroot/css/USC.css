@@ -10,9 +10,8 @@ p {
 .list-container {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
-
-
 
 .user-container {
     display: flex;

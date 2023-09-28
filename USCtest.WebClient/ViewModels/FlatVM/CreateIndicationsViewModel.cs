@@ -3,9 +3,11 @@
     public class CreateIndicationsViewModel
     {
         public int FlatId { get; set; }
+        public int UserPrifileId { get; set; }
 
-        public bool IsColdWatherDevice { get; set; }
-        public bool IsHotWatherDevice { get; set; }
+        public int Residents { get; set; }
+        public bool IsColdWaterDevice { get; set; }
+        public bool IsHotWaterDevice { get; set; }
         public bool IsElectricPowerDevice { get; set; }
 
         public IndicationsViewModel IndicationsViewModel { get; set; }

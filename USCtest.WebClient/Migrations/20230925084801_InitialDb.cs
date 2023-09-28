@@ -31,8 +31,8 @@ namespace USCtest.WebClient.Migrations
                     StreetNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     Building = table.Column<int>(type: "INTEGER", nullable: true),
                     FlatNumber = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsColdWatherDevice = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
-                    IsHotWatherDevice = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
+                    IsColdWaterDevice = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
+                    IsHotWaterDevice = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
                     IsElectricPowerDevice = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
                     Residents = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -68,8 +68,8 @@ namespace USCtest.WebClient.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ColdWather = table.Column<decimal>(type: "TEXT", nullable: false),
-                    HotWather = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ColdWater = table.Column<decimal>(type: "TEXT", nullable: false),
+                    HotWater = table.Column<decimal>(type: "TEXT", nullable: false),
                     ElectricPower = table.Column<decimal>(type: "TEXT", nullable: false),
                     IsPayed = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
                     FlatId = table.Column<string>(type: "TEXT", nullable: true),

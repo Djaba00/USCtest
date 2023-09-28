@@ -3,7 +3,7 @@
 
 @model List<UserViewModel>;
 
-<div class="users-container">
+<div class="list-container">
     <form asp-area="" asp-controller="User" asp-action="List" method="get">
         <input name="name" class="form-control" placeholder="ФИО пользователя" />
         <button type="submit">
@@ -19,7 +19,7 @@
 
     @foreach (var user in Model)
     {
-        <div class="list-container">
+        <div class="user-container">
             <div class="user-info-container">
                 <p>@user.FullName</p>
                 <p>@user.Passport</p>

@@ -1,0 +1,60 @@
+﻿@using USCtest.WebClient.ViewModels.TaxVM;
+@using USCtest.WebClient.ViewModels.FlatVM;
+
+@model CreateIndicationsViewModel;
+
+<div>
+    <h4>Передача показаний</h4>
+    <form class="newTax-form" method="post" asp-controller="Tax" asp-action="AddIndications">
+        <div asp-validation-summary="ModelOnly"></div>
+        @Html.HiddenFor(model => model.UserPrifileId)
+        @Html.HiddenFor(model => model.FlatId)
+
+        <label>
+            Колличество проживающих
+        </label>
+        <div class="mrgn">
+            <input asp-for="Residents" value="@Model.Residents" class="form-control" placeholder="Колличество проживающих" readonly />
+        </div>
+
+        @if (Model.IsColdWaterDevice)
+        {
+            <label>
+                Холодное водоснабжение
+            </label>
+            <div class="mrgn">
+                <input asp-for="IndicationsViewModel.ColdWater" value="@Model.IndicationsViewModel.ColdWater" class="form-control" placeholder="Холодное водоснабжение" />
+            </div>
+        }
+        
+        @if (Model.IsHotWaterDevice)
+        {
+            <label>
+                Горячее водоснабжение
+            </label>
+            <div class="mrgn">
+                <input asp-for="IndicationsViewModel.HotWaterHeat" value="@Model.IndicationsViewModel.HotWaterHeat" class="form-control" placeholder="Горячее водоснабжение" />
+            </div>
+        }
+        
+        @if (Model.IsElectricPowerDevice)
+        {
+            <label>
+                Электроэнергия (дневной тариф)
+            </label>
+            <div class="mrgn">
+                <input asp-for="IndicationsViewModel.ElectricityDay" value="@Model.IndicationsViewModel.ElectricityDay" class="form-control" placeholder="Электроэнергия (дневной тариф)" />
+            </div>
+            <label>
+                Электроэнергия (ночной тариф)
+            </label>
+            <div class="mrgn">
+                <input asp-for="IndicationsViewModel.ElectricityNight" value="@Model.IndicationsViewModel.ElectricityNight" class="form-control" placeholder="Электроэнергия (ночной тариф)" />
+            </div>
+        }
+
+        <div>
+            <input class="enter_submit" type="submit" value="Отправить" />
+        </div>
+    </form>
+</div>

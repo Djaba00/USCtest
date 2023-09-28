@@ -109,32 +109,6 @@ namespace USCtest.WebClient.Controllers
             return RedirectToAction("Flats");
         }
 
-        [Route("Flat/AddIndications/{id:int}")]
-        [HttpGet]
-        public async Task<IActionResult> AddFlatIndications(int id)
-        {
-            var falt = await flatService.GetFlatByIdAsync(id);
-
-            var flatVm = mapper.Map<CreateIndicationsViewModel>(falt);
-
-            return View("AddIndicationsView", flatVm);
-        }
-
-        [Route("Flat/AddIndications")]
-        [HttpPost]
-        public async Task<IActionResult> AddFlatIndications(CreateIndicationsViewModel faltVm)
-        {
-            var flatInd = mapper.Map<FlatIndications>(faltVm.IndicationsViewModel);
-
-            var flat = await flatService.GetFlatByIdAsync(faltVm.FlatId);
-
-            flat.Indications = flatInd;
-
-            await taxService.CreateTaxAsync(flat);
-
-            return RedirectToAction("List");
-        }
-
         [Route("Flat/GenerateFlats")]
         [HttpGet]
         public async Task<IActionResult> GenerateFlats()

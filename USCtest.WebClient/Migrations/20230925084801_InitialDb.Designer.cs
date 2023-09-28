@@ -158,7 +158,7 @@ namespace USCtest.WebClient.Migrations
                     b.Property<int>("FlatNumber")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsColdWatherDevice")
+                    b.Property<bool>("IsColdWaterDevice")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(false);
@@ -168,7 +168,7 @@ namespace USCtest.WebClient.Migrations
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(false);
 
-                    b.Property<bool>("IsHotWatherDevice")
+                    b.Property<bool>("IsHotWaterDevice")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(false);
@@ -194,7 +194,7 @@ namespace USCtest.WebClient.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("ColdWather")
+                    b.Property<decimal>("ColdWater")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("ElectricPower")
@@ -206,7 +206,7 @@ namespace USCtest.WebClient.Migrations
                     b.Property<int?>("FlatId1")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("HotWather")
+                    b.Property<decimal>("HotWater")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsPayed")

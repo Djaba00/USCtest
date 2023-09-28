@@ -27,16 +27,18 @@ namespace USCtest.WebClient.Configurations
 
             CreateMap<FlatModel, FlatViewModel>()
                 .ForMember(vm => vm.Address, opt => opt.MapFrom(m => m.GetFullAddress()))
-                .ForMember(vm => vm.Residents, opt => opt.MapFrom(m => m.Registrations.Where(r => r.RemoveDate > DateTime.MinValue).Count()))
+                .ForMember(vm => vm.Residents, opt => opt.MapFrom(m => m.GetResidentsCount()))
                 .ForMember(vm => vm.Debt, opt => opt.MapFrom(m => m.GetDebt()));
             CreateMap<CreateFlatViewModel, FlatViewModel>();
             CreateMap<UpdateFlatViewModel, FlatModel>().ReverseMap();
             CreateMap<FlatModel, CreateIndicationsViewModel>()
-                .ForMember(m => m.FlatId, opt => opt.MapFrom(m => m.Id)).ReverseMap();
+                .ForMember(vm => vm.FlatId, opt => opt.MapFrom(m => m.Id))
+                .ForMember(vm => vm.Residents, opt => opt.MapFrom(m => m.GetResidentsCount()))
+                .ReverseMap();
 
-            CreateMap<IndicationsViewModel, FlatIndications>();
+            CreateMap<IndicationsViewModel, IndicationsModel>();
 
-            CreateMap<CreateTaxViewModel, FlatIndications>();
+            CreateMap<CreateTaxViewModel, IndicationsModel>();
             CreateMap<UpdateTaxViewModel, TaxViewModel>().ReverseMap();
             CreateMap<TaxModel, TaxViewModel>()
                 .ForMember(vm => vm.Flat, opt => opt.MapFrom(m => m.Flat.GetFullAddress()));

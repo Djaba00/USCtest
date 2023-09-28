@@ -28,9 +28,9 @@ namespace USCtest.WebClient.Database.Generators
                     Street = street,
                     StreetNumber = strNumb,
                     FlatNumber = flatNumb,
-                    IsColdWatherDevice = Convert.ToBoolean(rnd.Next(0, 1)),
+                    IsColdWaterDevice = Convert.ToBoolean(rnd.Next(0, 1)),
                     IsElectricPowerDevice = Convert.ToBoolean(rnd.Next(0, 1)),
-                    IsHotWatherDevice = Convert.ToBoolean(rnd.Next(0, 1)),
+                    IsHotWaterDevice = Convert.ToBoolean(rnd.Next(0, 1)),
                 };
 
                 flats.Add(item);

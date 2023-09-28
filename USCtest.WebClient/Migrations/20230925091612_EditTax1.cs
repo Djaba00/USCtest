@@ -7,7 +7,7 @@ namespace USCtest.WebClient.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<double>(
-                name: "ColdWatherVolume",
+                name: "ColdWaterVolume",
                 table: "Taxes",
                 type: "REAL",
                 nullable: false,
@@ -21,7 +21,7 @@ namespace USCtest.WebClient.Migrations
                 defaultValue: 0.0);
 
             migrationBuilder.AddColumn<double>(
-                name: "HotWatherVolume",
+                name: "HotWaterVolume",
                 table: "Taxes",
                 type: "REAL",
                 nullable: false,
@@ -31,7 +31,7 @@ namespace USCtest.WebClient.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ColdWatherVolume",
+                name: "ColdWaterVolume",
                 table: "Taxes");
 
             migrationBuilder.DropColumn(
@@ -39,7 +39,7 @@ namespace USCtest.WebClient.Migrations
                 table: "Taxes");
 
             migrationBuilder.DropColumn(
-                name: "HotWatherVolume",
+                name: "HotWaterVolume",
                 table: "Taxes");
         }
     }

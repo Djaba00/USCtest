@@ -16,13 +16,13 @@
                 <div class="useruserprofile-flat-info-container">
                     <div class="flat-info-contatiner">
                         <p>@flat.Address</p>
-                        <p>Прибор учета ХВС: @flat.IsColdWatherDevice</p>
-                        <p>Прибор учета ГВС: @flat.IsHotWatherDevice</p>
+                        <p>Прибор учета ХВС: @flat.IsColdWaterDevice</p>
+                        <p>Прибор учета ГВС: @flat.IsHotWaterDevice</p>
                         <p>Прибор учета ЭЭ: @flat.IsElectricPowerDevice</p>
-                        <p>Задолженность: @flat.Debt</p>
+                        <p>Задолженность: <b>@flat.Debt</b> руб.</p>
                     </div>
 
-                    <a asp-area="" asp-controller="Flat" asp-action="AddIndications" asp-route-id="@flat.Id" method="get">
+                    <a asp-area="" asp-controller="Tax" asp-action="AddIndications" asp-route-flatId="@flat.Id" asp-route-userId="@Model.Id" method="get">
                         <button type="submit">
                             Передать показания
                         </button>
@@ -32,6 +32,42 @@
                             Удалить
                         </button>
                     </form>
+                </div>
+
+                <div class="flat-unpayed-taxes">
+                    <h2>Задолженности</h2>
+                    @if (flat.Taxes.Where(t => t.IsPayed == false) != null)
+                    {
+                        @foreach (var tax in flat.Taxes.Where(t => t.IsPayed == false))
+                        {
+                            <div class="tax-info-contatiner">
+                                <p>@tax.Date</p>
+                                <p>ХВС потребление: @Math.Round(@tax.ColdWaterVolume, 2) м^3.</p>
+                                <p>ХВС стоимость: @Math.Round(@tax.ColdWaterCost, 2) руб.</p>
+                                <p>ГВС потребление: @Math.Round(@tax.HotWaterHeatVolume, 2) м^3</p>
+                                <p>ГВС стоимость: @Math.Round(@tax.HotWaterHeatCost, 2) руб.</p>
+                                <p>ЭЭ потребление: @Math.Round(@tax.ElectricPowerVolume, 2) кВт.ч</p>
+                                <p>ЭЭ стоимость: @Math.Round(@tax.ElectricPowerCost, 2) руб.</p>
+                                <p>ЭЭ (дневной тариф) потребление: @Math.Round(@tax.ElectricityDayVolume, 2) кВт.ч.</p>
+                                <p>ЭЭ (дневной тариф) стоимость: @Math.Round(@tax.ElectricityDayCost, 2) руб.</p>
+                                <p>ЭЭ (ночной тариф) потребление: @Math.Round(@tax.ElectricityNightVolume, 2) кВт.ч.</p>
+                                <p>ЭЭ (ночной тариф) стоимость: @Math.Round(@tax.ElectricityNightCost, 2) руб.</p>
+
+                                <p>Задолженность: <b>@Math.Round(tax.SummaryCost, 2)</b> руб.</p>
+
+                                <form asp-area="" asp-controller="Tax" asp-action="Pay" asp-route-taxId="@tax.Id" asp-route-userId="@Model.Id" method="post">
+                                    <button type="submit">
+                                        Оплатить
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <h1>По данной квартире задолженностей нет</h1>
+                    }
+
                 </div>
             }
         </div>
