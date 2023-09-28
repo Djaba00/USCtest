@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +9,7 @@ using USCtest.BLL.Interfaces;
 using USCtest.BLL.Models;
 using USCtest.BLL.Services;
 using USCtest.WebClient.Database.Generators;
+using USCtest.WebClient.ViewModels.RegistrationVM;
 using USCtest.WebClient.ViewModels.UserVM;
 
 namespace USCtest.WebClient.Controllers
@@ -84,39 +87,6 @@ namespace USCtest.WebClient.Controllers
             return RedirectToAction("Users");
         }
 
-        [Route("User/Edit")]
-        [HttpGet]
-        public async Task<IActionResult> EditUserAsync()
-        {
-            return View("AddUser");
-        }
-
-        [Route("User/Edit")]
-        [HttpPost]
-        public async Task<IActionResult> EditUserAsync(UpdateUserViewModel newUser)
-        {
-            var user = mapper.Map<UserProfileModel>(newUser);
-
-            if (newUser.Flats != null)
-            {
-                var flats = new List<FlatModel>();
-
-                foreach (var flat in newUser.Flats)
-                {
-                    var currentFlat = await flatService.GetFlatByAddressAsync(flat.Address);
-
-                    if (currentFlat != null)
-                    {
-                        //user.Flats.Add(currentFlat);
-                    }
-                }
-            }
-
-            await userService.UpdateUserProfileAsync(user);
-
-            return RedirectToAction("Users");
-        }
-
         [Route("User/Remove")]
         [HttpPost]
         public async Task<IActionResult> RemoveUserAsync(int id)
@@ -125,6 +95,27 @@ namespace USCtest.WebClient.Controllers
 
             return RedirectToAction("Users");
         }
+
+        [Route("User/Deregistration")]
+        [HttpPost]
+        public async Task<IActionResult> DerigistrtionAsync(RegistrationViewModel registrationViewModel)
+        {
+            if (registrationViewModel != null)
+            {
+                var reg = mapper.Map<RegistrationModel>(registrationViewModel);
+
+                reg.RemoveDate = DateTime.Now;
+
+                await userService.UpdateRegistrtionAsync(reg);
+
+                return RedirectToAction("UserProfile", new { id = reg.UserId });
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
+        }
+
 
         [Route("User/Generate")]
         [HttpGet]
@@ -137,6 +128,28 @@ namespace USCtest.WebClient.Controllers
             {
                 await userService.CreateUserAsync(user);
             }
+
+            return RedirectToAction("List");
+        }
+
+        [Route("User/GenerateRegistrations")]
+        [HttpGet]
+        public async Task<IActionResult> GenerateRegistrations()
+        {
+            
+            //var flats = await flatService.GetAllFlatsAsync();
+
+            //var users = await userService.GetAllUsersAsync();
+
+            //foreach (var flat in flats)
+            //{
+            //    flat.Generate(users);
+
+            //    foreach (var reg in flat.Registrations)
+            //    {
+            //        await userService.AddNewRegistrtionAsync(reg);
+            //    }
+            //}
 
             return RedirectToAction("List");
         }

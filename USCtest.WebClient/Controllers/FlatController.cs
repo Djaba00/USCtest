@@ -68,9 +68,18 @@ namespace USCtest.WebClient.Controllers
 
         [Route("Flat/Edit")]
         [HttpGet]
-        public async Task<IActionResult> EditFlatAsync()
+        public async Task<IActionResult> EditFlatAsync(int flatId, int? userId)
         {
-            return View("AddFlat");
+            var falt = await flatService.GetFlatByIdAsync(flatId);
+
+            var flatVm = mapper.Map<UpdateFlatViewModel>(falt);
+
+            if (userId.HasValue)
+            {
+                flatVm.UserId = userId.Value;
+            }
+
+            return View("UpdateFlat", flatVm);
         }
 
         [Route("Flat/Edit")]
@@ -79,25 +88,14 @@ namespace USCtest.WebClient.Controllers
         {
             var flat = mapper.Map<FlatModel>(updateFlat);
 
-            if (updateFlat.Users != null)
+            if (flat != null)
             {
-                var users = new List<FlatModel>();
+                await flatService.UpdateFlatAsync(flat);
 
-                foreach (var user in updateFlat.Users)
-                {
-                    // изменить на поиск по паспорту
-                    var currentUser = await userService.GetUsersByNameAsync(user.GetFullName());
-
-                    if (currentUser != null)
-                    {
-                        //flat.Registrations.Add(currentUser.First());
-                    }
-                }
+                return RedirectToAction("UserProfile", "User", new { id = updateFlat.UserId });
             }
 
-            await flatService.UpdateFlatAsync(flat);
-
-            return RedirectToAction("Flats");
+            return RedirectToAction("List", "User");
         }
 
         [Route("Flat/Remove")]
@@ -119,27 +117,6 @@ namespace USCtest.WebClient.Controllers
             foreach (var flat in flatList)
             {
                 await flatService.CreateFlatAsync(flat);
-            }
-
-            return RedirectToAction("List");
-        }
-
-        [Route("Flat/GenerateRegistrations")]
-        [HttpGet]
-        public async Task<IActionResult> GenerateRegistrations()
-        {
-            var flats = await flatService.GetAllFlatsAsync();
-
-            var users = await userService.GetAllUsersAsync();
-
-            foreach (var flat in flats)
-            {
-                flat.Generate(users);
-
-                foreach (var reg in flat.Registrations)
-                {
-                    await flatService.AddRegistration(flat, reg);
-                }
             }
 
             return RedirectToAction("List");

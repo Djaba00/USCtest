@@ -14,7 +14,5 @@ namespace USCtest.WebClient.ViewModels.FlatVM
         public bool IsColdWaterDevice { get; set; }
         public bool IsHotWaterDevice { get; set; }
         public bool IsElectricPowerDevice { get; set; }
-
-        public List<UserProfileModel> Users { get; set; }
     }
 }

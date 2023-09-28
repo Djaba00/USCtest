@@ -13,6 +13,7 @@ namespace USCtest.DAL.Interfaces
         IFlatRepository<Flat> Flats { get; }
         ITaxRepository<Tax> Taxes { get; }
         IUserProfileRepository<UserProfile> UserProfiles { get; }
+        IRegistrationRepository<Registration> Registrations { get; }
         UserManager<ApplicationUser> Accounts { get; }
 
         Task SaveAsync();

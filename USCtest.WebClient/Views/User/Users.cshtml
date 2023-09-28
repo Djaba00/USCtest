@@ -24,7 +24,7 @@
                 <p>@user.FullName</p>
                 <p>@user.Passport</p>
                 <div class="user-flats">
-                @foreach (var flat in user.Registrations.Select(r => r.Flat))
+                    @foreach (var flat in user.Registrations.Where(r => r.RemoveDate == null || r.RemoveDate == DateTime.MinValue).Select(r => r.Flat))
                 {
                     <p>@flat.Address</p>
                 }

@@ -52,7 +52,7 @@ namespace USCtest.DAL.Repositories
 
         public async Task<Flat> CreateAsync(Flat entity)
         {
-            var result = await db.Flats.AddAsync(entity);
+            var result = db.Flats.Add(entity);
             await db.SaveChangesAsync();
 
             return result.Entity;
@@ -72,9 +72,6 @@ namespace USCtest.DAL.Repositories
                 flat.IsColdWaterDevice = entity.IsColdWaterDevice;
                 flat.IsHotWaterDevice = entity.IsHotWaterDevice;
                 flat.IsElectricPowerDevice = entity.IsElectricPowerDevice;
-
-                flat.Taxes = entity.Taxes;
-                //flat.Users = entity.Users;
 
                 db.Flats.Update(flat);
 

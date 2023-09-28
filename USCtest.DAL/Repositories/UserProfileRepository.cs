@@ -38,12 +38,13 @@ namespace USCtest.DAL.Repositories
                         .ThenInclude(f => f.Taxes)
                 .Include(u => u.ApplicationUser)
                 .FirstOrDefaultAsync(x => x.Id == id);
+
             return result;
         }
 
         public async Task<UserProfile> CreateAsync(UserProfile entity)
         {
-            var result = await db.UserProfiles.AddAsync(entity);
+            var result = db.UserProfiles.Add(entity);
             await db.SaveChangesAsync();
 
             return result.Entity;
@@ -61,8 +62,6 @@ namespace USCtest.DAL.Repositories
                 user.PassportSeries = entity.PassportSeries;
                 user.PassportNumber = entity.PassportNumber;
 
-                //user.Flats = entity.Flats;
-                user.Registrations = entity.Registrations;
                 user.ApplicationUser = entity.ApplicationUser;
             }
         }

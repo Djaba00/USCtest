@@ -14,6 +14,7 @@ namespace USCtest.DAL.Repositories
         FlatRepository FlatRepository { get; set; }
         TaxRepository TaxRepository { get; set; }
         UserProfileRepository UserProfileRepository { get; set; }
+        RegistrationRepository RegistrationRepository { get; set; }
         UserManager<ApplicationUser> AccountManager { get; set; }
 
         private bool disposed = false;
@@ -46,6 +47,19 @@ namespace USCtest.DAL.Repositories
                     TaxRepository = new TaxRepository(db);
                 }
                 return TaxRepository;
+            }
+        }
+
+        public IRegistrationRepository<Registration> Registrations
+        {
+            get
+            {
+                if (RegistrationRepository == null)
+                {
+                    RegistrationRepository = new RegistrationRepository(db);
+                }
+
+                return RegistrationRepository;
             }
         }
 

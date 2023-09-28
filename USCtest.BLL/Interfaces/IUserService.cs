@@ -14,8 +14,9 @@ namespace USCtest.BLL.Interfaces
         Task<UserProfileModel> GetUserByIdAsync(int id);
         Task<List<UserProfileModel>> GetUsersByNameAsync(string name);
         Task CreateUserAsync(UserProfileModel userDto);
-        Task ChangeRegistrationAsync(UserProfileModel userDto);
-        Task UpdateUserProfileAsync(UserProfileModel userDto);
         Task DeleteUserAsync(int id);
+
+        Task AddNewRegistrtionAsync(RegistrationModel registrationModel);
+        Task UpdateRegistrtionAsync(RegistrationModel registrationModel);
     }
 }

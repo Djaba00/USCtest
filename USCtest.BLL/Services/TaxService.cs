@@ -37,11 +37,15 @@ namespace USCtest.BLL.Services
 
         public async Task CreateTaxAsync(FlatModel flatModel)
         {
-            flatModel.Taxes.Add(CommonCalculate(flatModel));
+            //flatModel.Taxes.Add(CommonCalculate(flatModel));
 
-            var updateFlat = mapper.Map<Flat>(flatModel);
+            //var updateFlat = mapper.Map<Flat>(flatModel);
 
-            await db.Flats.UpdateAsync(updateFlat);
+            var taxModel = CommonCalculate(flatModel);
+
+            var tax = mapper.Map<Tax>(taxModel);
+
+            await db.Taxes.CreateAsync(tax);
         }
 
         public async Task UpdateTaxAsync(int taxId)
@@ -103,6 +107,7 @@ namespace USCtest.BLL.Services
 
             var newTaxModel = new TaxModel()
             {
+                FlatId = flatModel.Id,
                 Date = customDate is null? DateTime.Now.Date : customDate.Value,
                 Residents = flatModel.GetResidentsCount(),
                 ColdWaterVolume = coldWaterVolume,

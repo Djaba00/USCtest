@@ -11,34 +11,44 @@
         </div>
         <h3>Квартиры</h3>
         <div class="useruserprofile-flats">
-            @foreach (var flat in Model.Registrations.Select(r => r.Flat))
+            @foreach (var registration in Model.Registrations.Where(r => r.RemoveDate == null || r.RemoveDate == DateTime.MinValue))
             {
                 <div class="useruserprofile-flat-info-container">
                     <div class="flat-info-contatiner">
-                        <p>@flat.Address</p>
-                        <p>Прибор учета ХВС: @flat.IsColdWaterDevice</p>
-                        <p>Прибор учета ГВС: @flat.IsHotWaterDevice</p>
-                        <p>Прибор учета ЭЭ: @flat.IsElectricPowerDevice</p>
-                        <p>Задолженность: <b>@flat.Debt</b> руб.</p>
+                        <p>@registration.Flat.Address</p>
+                        <p>Прибор учета ХВС: @registration.Flat.IsColdWaterDevice</p>
+                        <p>Прибор учета ГВС: @registration.Flat.IsHotWaterDevice</p>
+                        <p>Прибор учета ЭЭ: @registration.Flat.IsElectricPowerDevice</p>
+                        <p>Задолженность: <b>@registration.Flat.Debt</b> руб.</p>
                     </div>
 
-                    <a asp-area="" asp-controller="Tax" asp-action="AddIndications" asp-route-flatId="@flat.Id" asp-route-userId="@Model.Id" method="get">
+                    <a asp-area="" asp-controller="Tax" asp-action="AddIndications" asp-route-flatId="@registration.Flat.Id" asp-route-userId="@Model.Id" method="get">
                         <button type="submit">
                             Передать показания
                         </button>
                     </a>
-                    <form asp-area="" asp-controller="Registration" asp-action="Remove" asp-route-id="@flat.Id" method="post">
+                    <a asp-area="" asp-controller="Flat" asp-action="Edit" asp-route-flatId="@registration.Flat.Id" asp-route-userId="@Model.Id" method="get">
                         <button type="submit">
-                            Удалить
+                            Изменить данные
+                        </button>
+                    </a>
+                    <form asp-area="" asp-controller="User" asp-action="Deregistration" method="post">
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <input name="UserId" value="@registration.UserId" type="hidden" />
+                        <input name="FlatId" value="@registration.FlatId" type="hidden" />
+                        <input name="RegistrationDate" value="@registration.RegistrationDate" type="hidden" />
+                        <input name="RemoveDate" value="@registration.RemoveDate" type="hidden" />
+                        <button type="submit">
+                            Снятие с регистрации
                         </button>
                     </form>
                 </div>
 
                 <div class="flat-unpayed-taxes">
                     <h2>Задолженности</h2>
-                    @if (flat.Taxes.Where(t => t.IsPayed == false) != null)
+                    @if (registration.Flat.Taxes.Where(t => t.IsPayed == false) != null)
                     {
-                        @foreach (var tax in flat.Taxes.Where(t => t.IsPayed == false))
+                        @foreach (var tax in registration.Flat.Taxes.Where(t => t.IsPayed == false))
                         {
                             <div class="tax-info-contatiner">
                                 <p>@tax.Date</p>

@@ -93,62 +93,6 @@ namespace USCtest.BLL.Services
             }
         }
 
-        // правки
-        public async Task ChangeRegistrationAsync(UserProfileModel userModel)
-        {
-            if (userModel != null)
-            {
-                var user = mapper.Map<UserProfile>(userModel);
-                var currentUser = await db.UserProfiles.GetAsync(user.Id);
-
-                if (currentUser != null)
-                {
-                    currentUser.Flats = user.Flats;
-                    await db.UserProfiles.UpdateAsync(currentUser);
-                }
-                else
-                {
-                    throw new Exception("Пользователь не найден");
-                }
-            }
-            else
-            {
-                throw new Exception("Не корректный формат данных пользователя");
-            }
-        }
-
-        public async Task UpdateUserProfileAsync(UserProfileModel userModel)
-        {
-            if (userModel != null)
-            {
-                var user = mapper.Map<UserProfile>(userModel);
-
-                var currentUser = await db.UserProfiles.GetAsync(user.Id);
-
-                if (currentUser != null)
-                {
-                    currentUser.FirstName = user.FirstName;
-                    currentUser.LastName = user.LastName;
-                    currentUser.MiddleName = user.MiddleName;
-                    
-                    currentUser.PassportSeries = user.PassportSeries;
-                    currentUser.PassportNumber = user.PassportNumber;
-
-                    currentUser.Flats = user.Flats;
-
-                    await db.UserProfiles.UpdateAsync(currentUser);
-                }
-                else
-                {
-                    throw new Exception("Пользователь не найден");
-                }
-            }
-            else
-            {
-                throw new Exception("Не корректный формат данных пользователя");
-            }
-        }
-
         public async Task DeleteUserAsync(int id)
         {
             var currentUser = await db.UserProfiles.GetAsync(id);
@@ -160,6 +104,34 @@ namespace USCtest.BLL.Services
             else
             {
                 throw new Exception("Пользователь не найден");
+            }
+        }
+
+        public async Task AddNewRegistrtionAsync(RegistrationModel registrationModel)
+        {
+            if (registrationModel.RegistrationDate != DateTime.MinValue && registrationModel != null)
+            {
+                var registration = mapper.Map<Registration>(registrationModel);
+
+                await db.Registrations.CreateRegistrationAsync(registration);
+            }
+            else
+            {
+                throw new Exception("Некорректный формат времени");
+            }
+        }
+
+        public async Task UpdateRegistrtionAsync(RegistrationModel registrationModel)
+        {
+            if (registrationModel.RegistrationDate != DateTime.MinValue && registrationModel != null)
+            {
+                var registration = mapper.Map<Registration>(registrationModel);
+
+                await db.Registrations.UpdateRegistrtionAsync(registration);
+            }
+            else
+            {
+                throw new Exception("Некорректный формат времени");
             }
         }
     }

@@ -93,28 +93,6 @@ namespace USCtest.BLL.Services
             }
         }
 
-        public async Task AddRegistration(FlatModel flatModel, RegistrationModel registrationModel)
-        {
-            if (registrationModel.RegistrationDate != DateTime.MinValue && registrationModel != null)
-            {
-
-                flatModel.Registrations.Add(registrationModel);
-
-                var flat = mapper.Map<Flat>(flatModel);
-
-                await db.Flats.UpdateAsync(flat);
-            }
-            else
-            {
-                throw new Exception("Некорректный формат времени");
-            }
-        }
-
-        public async Task UpdateRegistration(int flatId, RegistrationModel registrationModel)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task CreateFlatAsync(FlatModel flatModel)
         {
             if (flatModel != null)
@@ -147,9 +125,6 @@ namespace USCtest.BLL.Services
                     currentFlat.IsColdWaterDevice = flat.IsColdWaterDevice;
                     currentFlat.IsHotWaterDevice = flat.IsHotWaterDevice;
                     currentFlat.IsElectricPowerDevice = flat.IsElectricPowerDevice;
-
-                    //currentFlat.Users = flat.Users;
-                    currentFlat.Taxes = flat.Taxes;
 
                     await db.Flats.UpdateAsync(currentFlat);
                 } 

@@ -1,0 +1,43 @@
+﻿﻿@using USCtest.WebClient.ViewModels.FlatVM;
+
+@model UpdateFlatViewModel;
+
+<div class="flat-update-container">
+    <h4>Новые данные квартиры</h4>
+    <form class="flat-update-form" method="post" asp-controller="Flat" asp-action="Edit">
+        <div asp-validation-summary="ModelOnly"></div>
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.UserId)
+        <div class="mrgn">
+            <label>Улица</label>
+            <input asp-for="Street" value="@Model.Street" class="form-control" />
+        </div>
+        <div class="mrgn">
+            <label>Номер дома</label>
+            <input asp-for="StreetNumber" value="@Model.StreetNumber" class="form-control" />
+        </div>
+        <div class="mrgn">
+            <label>Строение</label>
+            <input asp-for="Building" value="@Model.Building" class="form-control" />
+        </div>
+        <div class="mrgn">
+            <label>Номер квартиры</label>
+            <input asp-for="FlatNumber" value="@Model.FlatNumber" class="form-control" />
+        </div>
+        <div class="mrgn">
+            <label>Прибор для учета холодной воды</label>
+            @Html.CheckBoxFor(m => m.IsColdWaterDevice)
+        </div>
+        <div class="mrgn">
+            <label>Прибор для учета горячеей воды</label>
+            @Html.CheckBoxFor(m => m.IsHotWaterDevice)
+        </div>
+        <div class="mrgn">
+            <label>Прибор для учета электроэнергии</label>
+            @Html.CheckBoxFor(m => m.IsElectricPowerDevice)
+        </div>
+        <div>
+            <input class="enter_submit" type="submit" value="Отправить" />
+        </div>
+    </form>
+</div>

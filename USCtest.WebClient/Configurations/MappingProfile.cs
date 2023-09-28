@@ -30,7 +30,7 @@ namespace USCtest.WebClient.Configurations
                 .ForMember(vm => vm.Residents, opt => opt.MapFrom(m => m.GetResidentsCount()))
                 .ForMember(vm => vm.Debt, opt => opt.MapFrom(m => m.GetDebt()));
             CreateMap<CreateFlatViewModel, FlatViewModel>();
-            CreateMap<UpdateFlatViewModel, FlatModel>().ReverseMap();
+            CreateMap<FlatModel, UpdateFlatViewModel>().ReverseMap();
             CreateMap<FlatModel, CreateIndicationsViewModel>()
                 .ForMember(vm => vm.FlatId, opt => opt.MapFrom(m => m.Id))
                 .ForMember(vm => vm.Residents, opt => opt.MapFrom(m => m.GetResidentsCount()))

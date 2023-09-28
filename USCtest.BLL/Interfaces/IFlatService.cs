@@ -13,8 +13,6 @@ namespace USCtest.BLL.Interfaces
         Task<FlatModel> GetFlatByIdAsync(int id);
         Task<FlatModel> GetFlatByAddressAsync(string name);
         Task<List<FlatModel>> GetFlatsByAddressAsync(string address);
-        Task AddRegistration(FlatModel flatModel, RegistrationModel registrationModel);
-        Task UpdateRegistration(int flatId, RegistrationModel registrationModel);
         Task CreateFlatAsync(FlatModel flatModel);
         Task UpdateFlatAsync(FlatModel flatModel);
         Task DeleteUserAsync(int id);

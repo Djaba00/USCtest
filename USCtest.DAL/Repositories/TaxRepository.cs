@@ -37,7 +37,14 @@ namespace USCtest.DAL.Repositories
 
         public async Task<Tax> CreateAsync(Tax entity)
         {
-            var result = await db.Taxes.AddAsync(entity);
+            var flat = db.Flats.FirstOrDefault(f => f.Id == entity.FlatId);
+            
+            if (flat == null)
+            {
+                throw new Exception($"Квартиры с id {entity.FlatId} не существует");
+            }
+
+            var result = db.Taxes.Add(entity);
             await db.SaveChangesAsync();
 
             return result.Entity;
