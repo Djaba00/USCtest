@@ -34,9 +34,6 @@ namespace USCtest.BLL.Configurations
 
             services.AddSingleton(mapper);
 
-
-            services.AddScoped<IUnitOfWork, ContextUnitOfWork>();
-
             return services;
         }
 
